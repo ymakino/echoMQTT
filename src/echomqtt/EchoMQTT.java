@@ -34,7 +34,7 @@ public class EchoMQTT {
     private LinkedList<SubscribeTask> subscribeTasks;
     
     public EchoMQTT(Core core, String broker, String clientId) throws PublisherException {
-        logger.entering(className, "Echobridge", new Object[]{core, broker, clientId});
+        logger.entering(className, "EchoMQTT", new Object[]{core, broker, clientId});
         
         service = new Service(core);
         this.broker = broker;
@@ -43,7 +43,7 @@ public class EchoMQTT {
         rulesList = new LinkedList<Rules>();
         working = false;
         
-        logger.exiting(className, "Echobridge");
+        logger.exiting(className, "EchoMQTT");
     }
     
     public PublishTask createPublishTask(PublishRule rule) throws SubnetException {
@@ -141,7 +141,7 @@ public class EchoMQTT {
      */
     public static void main(String[] args) throws SubnetException, TooManyObjectsException, SocketException, IOException, PublisherException, ParserConfigurationException, SAXException, InterruptedException {
         String broker = "tcp://127.0.0.1:1883";
-        String clientId = "echobridge";
+        String clientId = "echoMQTT";
         NetworkInterface nif = null;
         
         LinkedList<String> ruleFiles = new LinkedList<String>();
@@ -156,7 +156,7 @@ public class EchoMQTT {
         for (int i=0; i<args.length; i++) {
             switch (args[i]) {
                 case "-h":
-                    showUsage("echobridge");
+                    showUsage("EchoMQTT");
                     return;
                 case "-i":
                     if (args[++i].equals("-")) {
@@ -181,7 +181,7 @@ public class EchoMQTT {
         }
         
         if (ruleFiles.size() == 0) {
-            showUsage("echobridge");
+            showUsage("EchoMQTT");
             return;
         }
         
