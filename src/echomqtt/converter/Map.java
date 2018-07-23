@@ -1,13 +1,11 @@
 package echomqtt.converter;
 
 import echowand.common.Data;
-import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import echomqtt.json.JsonDecoderException;
 import echomqtt.json.JObject;
-import echomqtt.json.JString;
 import echomqtt.json.JValue;
+import java.util.HashMap;
+import java.util.logging.Logger;
 
 /**
  *
