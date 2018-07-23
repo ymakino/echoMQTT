@@ -7,37 +7,37 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 /**
- * Noteの引数及び戻り値として利用される配列を表す。
+ *
  * @author ymakino
  */
-public class JsonArray extends JsonValue {
-    private static final Logger logger = Logger.getLogger(JsonArray.class.getName());
-    private static final String className = JsonArray.class.getName();
+public class JArray extends JValue {
+    private static final Logger logger = Logger.getLogger(JArray.class.getName());
+    private static final String className = JArray.class.getName();
     
-    private List<JsonValue> valueList;
+    private List<JValue> jvalueList;
     
     /**
      * 指定された値を要素として持つ配列を生成する。
-     * @param values 配列の要素の値の指定
+     * @param jvalues 配列の要素の値の指定
      */
-    protected JsonArray(List<? extends JsonValue> values) {
-        logger.entering(className, "ValueArray", values);
+    protected JArray(List<? extends JValue> jvalues) {
+        logger.entering(className, "JArray", jvalues);
         
-        valueList = new ArrayList<JsonValue>(values);
+        jvalueList = new ArrayList<JValue>(jvalues);
         
-        logger.entering(className, "ValueArray");
+        logger.entering(className, "JArray");
     }
     
     /**
      * 指定された値を要素として持つ配列を生成する。
-     * @param values 配列の要素の値の指定
+     * @param jvalues 配列の要素の値の指定
      */
-    protected JsonArray(JsonValue... values) {
-        logger.entering(className, "ValueArray", values);
+    protected JArray(JValue... jvalues) {
+        logger.entering(className, "JArray", jvalues);
         
-        valueList = Arrays.asList(values);
+        jvalueList = Arrays.asList(jvalues);
         
-        logger.entering(className, "ValueArray");
+        logger.entering(className, "JArray");
     }
     
     /**
@@ -45,7 +45,7 @@ public class JsonArray extends JsonValue {
      * @return 配列の要素数
      */
     public int size() {
-        return valueList.size();
+        return jvalueList.size();
     }
     
     /**
@@ -53,8 +53,8 @@ public class JsonArray extends JsonValue {
      * @param index 要素の番号の指定
      * @return 配列の要素
      */
-    public JsonValue get(int index) {
-        return valueList.get(index);
+    public JValue get(int index) {
+        return jvalueList.get(index);
     }
     
     /**
@@ -63,12 +63,12 @@ public class JsonArray extends JsonValue {
      * @param value 要素の値の指定
      * @return 指定された通りに要素が置き換えられた配列
      */
-    public JsonArray alter(int index, JsonValue value) {
+    public JArray alter(int index, JValue value) {
         logger.entering(className, "alter", new Object[]{index, value});
         
-        ArrayList<JsonValue> newArray = new ArrayList<JsonValue>(valueList);
+        ArrayList<JValue> newArray = new ArrayList<JValue>(jvalueList);
         newArray.add(index, value);
-        JsonArray resultValue = new JsonArray(newArray);
+        JArray resultValue = new JArray(newArray);
         
         logger.exiting(className, "alter", resultValue);
         return resultValue;
@@ -80,15 +80,15 @@ public class JsonArray extends JsonValue {
      * @param valueMap 要素番号と要素の値の対応
      * @return 指定された通りに要素が置き換えられた配列
      */
-    public JsonArray alter(Map<Integer, ? extends JsonValue> valueMap) {
+    public JArray alter(Map<Integer, ? extends JValue> valueMap) {
         logger.entering(className, "alter", valueMap);
         
-        ArrayList<JsonValue> newArray = new ArrayList<JsonValue>(valueList);
-        for (Map.Entry<Integer, ? extends JsonValue> entry: valueMap.entrySet()) {
+        ArrayList<JValue> newArray = new ArrayList<JValue>(jvalueList);
+        for (Map.Entry<Integer, ? extends JValue> entry: valueMap.entrySet()) {
             newArray.add(entry.getKey(), entry.getValue());
         }
         
-        JsonArray resultValue = new JsonArray(newArray);
+        JArray resultValue = new JArray(newArray);
         
         logger.exiting(className, "alter", resultValue);
         return resultValue;
@@ -99,10 +99,10 @@ public class JsonArray extends JsonValue {
      * @param values 追加する要素の値の指定
      * @return 要素が追加された配列
      */
-    public JsonArray alterAppend(JsonValue... values) {
+    public JArray alterAppend(JValue... values) {
         logger.entering(className, "alterAppend", values);
         
-        JsonArray resultValue = alterAppend(Arrays.asList(values));
+        JArray resultValue = alterAppend(Arrays.asList(values));
         
         logger.exiting(className, "alterAppend", resultValue);
         return resultValue;
@@ -113,13 +113,13 @@ public class JsonArray extends JsonValue {
      * @param values 追加する要素の値の指定
      * @return 要素が追加された配列
      */
-    public JsonArray alterAppend(List<? extends JsonValue> values) {
+    public JArray alterAppend(List<? extends JValue> values) {
         logger.entering(className, "alterAppend", values);
         
-        ArrayList<JsonValue> newArray = new ArrayList<JsonValue>(valueList.size() + values.size());
-        newArray.addAll(valueList);
+        ArrayList<JValue> newArray = new ArrayList<JValue>(jvalueList.size() + values.size());
+        newArray.addAll(jvalueList);
         newArray.addAll(values);
-        JsonArray resultValue = new JsonArray(newArray);
+        JArray resultValue = new JArray(newArray);
         
         logger.exiting(className, "alterAppend", resultValue);
         return resultValue;
@@ -132,29 +132,30 @@ public class JsonArray extends JsonValue {
      * @param padding パディング用の値の指定
      * @return サイズが変更された配列
      */
-    public JsonArray alterSize(int size, JsonValue padding) {
+    public JArray alterSize(int size, JValue padding) {
         logger.entering(className, "alterSize", size);
         
         if (size < 0) {
             size = 0;
         }
         
-        ArrayList<JsonValue> newArray = new ArrayList<JsonValue>(size);
-        int minSize = Math.min(valueList.size(), size);
+        ArrayList<JValue> newArray = new ArrayList<JValue>(size);
+        int minSize = Math.min(jvalueList.size(), size);
         for (int i=0; i<minSize; i++) {
-            newArray.add(valueList.get(i));
+            newArray.add(jvalueList.get(i));
         }
         
         for (int i=minSize; i<size; i++) {
             newArray.add(padding);
         }
         
-        JsonArray resultValue = new JsonArray(newArray);
+        JArray resultValue = new JArray(newArray);
         
         logger.exiting(className, "alterSize", resultValue);
         return resultValue;
     }
     
+    @Override
     public boolean isArray() {
         return true;
     }
@@ -175,11 +176,11 @@ public class JsonArray extends JsonValue {
     
     @Override
     public boolean equals(Object object) {
-        if (!(object instanceof JsonArray)) {
+        if (!(object instanceof JArray)) {
             return false;
         }
         
-        JsonArray valueArray = (JsonArray)object;
+        JArray valueArray = (JArray)object;
         
         if (size() != valueArray.size()) {
             return false;

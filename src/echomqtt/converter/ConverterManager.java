@@ -1,5 +1,7 @@
 package echomqtt.converter;
 
+import echomqtt.json.JValue;
+import echomqtt.json.JsonDecoderException;
 import echowand.common.Data;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -50,19 +52,19 @@ public class ConverterManager {
                 logger.exiting(className, "instantiate", result);
                 return result;
             } catch (ClassNotFoundException ex) {
-                logger.logp(Level.FINE, className, "SubscribeTask.arrived", "catched exception", ex);
+                logger.logp(Level.WARNING, className, "instantiate", "catched exception", ex);
             } catch (NoSuchMethodException ex) {
-                logger.logp(Level.INFO, className, "SubscribeTask.arrived", "catched exception", ex);
+                logger.logp(Level.WARNING, className, "instantiate", "catched exception", ex);
             } catch (SecurityException ex) {
-                logger.logp(Level.INFO, className, "SubscribeTask.arrived", "catched exception", ex);
+                logger.logp(Level.WARNING, className, "instantiate", "catched exception", ex);
             } catch (InstantiationException ex) {
-                logger.logp(Level.INFO, className, "SubscribeTask.arrived", "catched exception", ex);
+                logger.logp(Level.WARNING, className, "instantiate", "catched exception", ex);
             } catch (IllegalAccessException ex) {
-                logger.logp(Level.INFO, className, "SubscribeTask.arrived", "catched exception", ex);
+                logger.logp(Level.WARNING, className, "instantiate", "catched exception", ex);
             } catch (IllegalArgumentException ex) {
-                logger.logp(Level.INFO, className, "SubscribeTask.arrived", "catched exception", ex);
+                logger.logp(Level.WARNING, className, "instantiate", "catched exception", ex);
             } catch (InvocationTargetException ex) {
-                logger.logp(Level.INFO, className, "SubscribeTask.arrived", "catched exception", ex);
+                logger.logp(Level.WARNING, className, "instantiate", "catched exception", ex);
             }
         }
         
@@ -112,7 +114,7 @@ public class ConverterManager {
         return null;
     }
     
-    public static void main(String[] args) throws ConverterException {
+    public static void main(String[] args) throws ConverterException, JsonDecoderException {
         ConverterManager converterManager = new ConverterManager();
         
         HashMap<String, String> integerParam = new HashMap<String, String>();
@@ -123,20 +125,25 @@ public class ConverterManager {
         floatParam.put("divide", "10");
         floatParam.put("size", "2");
         
-        HashMap<String, String> mapParam = new HashMap<String, String>();
-        mapParam.put("map", "ON:30, OFF:31");
+        HashMap<String, String> mapParam1 = new HashMap<String, String>();
+        mapParam1.put("mapping", "{\"ON\":\"30\", \"OFF\":\"31\"}");
+        
+        HashMap<String, String> mapParam2 = new HashMap<String, String>();
+        mapParam2.put("mapping", "{\"30\":\"ON\", \"31\":\"OFF\"}");
         
         
         Converter ci = converterManager.getConverter("Integer", integerParam);
-        System.out.println(ci.convertString("1234"));
-        System.out.println(ci.convertData(new Data(new byte[]{0x12})));
+        System.out.println(ci.convert(JValue.parseJSON("1234")));
+        System.out.println(ci.convert(new Data(new byte[]{0x12})));
         
         Converter cf = converterManager.getConverter("Float", floatParam);
-        System.out.println(cf.convertString("1234"));
-        System.out.println(cf.convertData(new Data(new byte[]{0x12})));
+        System.out.println(cf.convert(JValue.parseJSON("1234")));
+        System.out.println(cf.convert(new Data(new byte[]{0x12})));
         
-        Converter cm = converterManager.getConverter("Map", mapParam);
-        System.out.println(cm.convertString("on"));
-        System.out.println(cm.convertData(new Data(new byte[]{0x31})));
+        Converter cm1 = converterManager.getConverter("Map", mapParam1);
+        System.out.println(cm1.convert(JValue.parseJSON("\"on\"")));
+        
+        Converter cm2 = converterManager.getConverter("Map", mapParam2);
+        System.out.println(cm2.convert(new Data(new byte[]{0x31})));
     }
 }

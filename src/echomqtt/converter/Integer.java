@@ -1,6 +1,9 @@
 package echomqtt.converter;
 
+import echomqtt.json.JValue;
+import echomqtt.json.JsonDecoderException;
 import echowand.common.Data;
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.logging.Logger;
@@ -9,7 +12,7 @@ import java.util.logging.Logger;
  *
  * @author ymakino
  */
-public class Integer implements Converter {
+public class Integer extends Converter {
     private static final Logger logger = Logger.getLogger(Integer.class.getName());
     private static final String className = Integer.class.getName();
     
@@ -58,52 +61,77 @@ public class Integer implements Converter {
         logger.exiting(className, "Integer");
     }
     
-    public static long u(Data data) {
-        return Long.parseLong(data.toString(), 16);
+    protected static BigInteger u(Data data) {
+        return new BigInteger(data.toString(), 16);
     }
     
-    public static long s(Data data) {
+    protected static BigInteger s(Data data) {
         
-        long num = Long.parseLong(data.toString(), 16);
+        boolean isNegative = ((data.get(0) & 0x80) != 0);
         
-        if ((data.get(0) & 0x80) != 0) {
-           long pad = Long.MIN_VALUE;
-           while ((pad & num) == 0) {
-               pad >>= 1;
-           }
-
-           num |= pad;
+        String str;
+        
+        if (!isNegative) {
+            str = data.toString();
+        } else {
+            byte[] bytes = new byte[data.size()];
+            for (int i=0; i<data.size(); i++) {
+                bytes[i] = (byte)(0x00ff & ((data.get(i) ^ (byte)0xff)));
+            }
+            str = new Data(bytes).toString();
+        }
+        
+        BigInteger num = new BigInteger(str, 16);
+        
+        if (isNegative) {
+            num = num.add(BigInteger.ONE).negate();
         }
 
         return num;
     }
 
     @Override
-    public String convertData(Data data) {
-        logger.entering(className, "convertData", data);
+    public JValue convert(Data data) {
+        logger.entering(className, "convert", data);
         
-        String result;
+        JValue result;
         
         if (isSigned) {
-            result = String.format("%d", s(data));
+            result = JValue.newNumber(s(data));
         } else {
-            result = String.format("%d", u(data));
+            result = JValue.newNumber(u(data));
         }
         
-        logger.exiting(className, "convertData", result);
+        logger.exiting(className, "convert", result);
         return result;
     }
 
     @Override
-    public Data convertString(String str) {
-        logger.entering(className, "convertString", str);
+    public Data convert(JValue jvalue) throws ConverterException {
+        logger.entering(className, "convert", jvalue);
         
-        BigInteger num = new BigInteger(str);
+        BigDecimal value;
+        
+        if (jvalue.isNumber()) {
+            value = jvalue.asNumber().getValue();
+        } else if (jvalue.isString()) {
+            value = new BigDecimal(jvalue.asString().getValue());
+        } else {
+            ConverterException exception = new ConverterException("invalid value: " + jvalue);
+            logger.throwing(className, "convert", exception);
+            throw exception;
+        }
+        
+        BigInteger num = value.toBigInteger();
         
         byte[] buf = new byte[size];
         
         for (int i=0; i<size; i++) {
             buf[size - i - 1] = (byte)(num.shiftRight(8 * i).intValue() & 0xff);
+        }
+        
+        if (isSigned && value.signum() == 1) {
+            buf [0] &= 0x7f;
         }
         
         Data result = new Data(buf);
@@ -123,11 +151,11 @@ public class Integer implements Converter {
         return builder.toString();
     }
     
-    public static void main(String[] args) throws ConverterException {
+    public static void main(String[] args) throws ConverterException, JsonDecoderException {
         HashMap<String, String> map1 = new HashMap<String, String>();
         map1.put("unsigned", "true");
         map1.put("size", "2");
-        Converter c1 = new Integer(map1);
+        Integer c1 = new Integer(map1);
         /*
         Converter c2 = new Integer(Arrays.asList(new String[]{"signed", "2"}));
         Converter c3 = new Integer(Arrays.asList(new String[]{"signed", "4"}));
@@ -135,10 +163,10 @@ public class Integer implements Converter {
         Converter c5 = new Integer(Arrays.asList(new String[]{"signed", "16"}));
     */
         
-        System.out.println(c1.convertData(new Data((byte)0xff)));
-        System.out.println(c1.convertString("-1"));
+        System.out.println(c1.convert(new Data((byte)0xff)));
+        System.out.println(c1.convert(JValue.parseJSON("-1")));
         
-        System.out.println(c1.convertData(new Data((byte)0x12, (byte)0x34)));
-        System.out.println(c1.convertString("1"));
+        System.out.println(c1.convert(new Data((byte)0x12, (byte)0x34)));
+        System.out.println(c1.convert(JValue.parseJSON("1")));
     }
 }

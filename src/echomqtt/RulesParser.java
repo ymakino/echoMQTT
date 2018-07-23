@@ -89,8 +89,23 @@ public class RulesParser {
             Node node = nodeList.item(i);
             if (node.getNodeType() == Node.ELEMENT_NODE) {
                 switch (node.getNodeName()) {
-                    case "publish": publishRules.add(parsePublish(node)); break;
-                    case "subscribe": subscribeRules.add(parseSubscribe(node)); break;
+                    case "publish":
+                        PublishRule publishRule = parsePublish(node);
+                        if (publishRule == null) {
+                            logger.logp(Level.INFO, className, "parseRules", "invalid node: " + node.getNodeName());
+                            logger.exiting(className, "parseRules", null);
+                            return null;
+                        }
+                        publishRules.add(publishRule);
+                        break;
+                    case "subscribe":
+                        SubscribeRule subscribeRule = parseSubscribe(node);
+                        if (subscribeRule == null) {
+                            logger.logp(Level.INFO, className, "parseRules", "invalid node: " + node.getNodeName());
+                            logger.exiting(className, "parseRules", null);
+                            return null;
+                        }
+                        subscribeRules.add(subscribeRule); break;
                     default:
                         logger.logp(Level.INFO, className, "parseRules", "invalid node: " + node.getNodeName());
                         logger.exiting(className, "parseRules", null);
@@ -112,6 +127,33 @@ public class RulesParser {
         LinkedList<PropertyRule> propertyRules = new LinkedList<PropertyRule>();
         int interval = -1;
         String topic = null;
+        boolean getEnabled = true;
+        boolean notifyEnabled = false;
+        
+        Node nodeGet = publishNode.getAttributes().getNamedItem("get");
+        Node nodeNotify = publishNode.getAttributes().getNamedItem("notify");
+        
+        if (nodeGet != null) {
+            switch (nodeGet.getTextContent().trim()) {
+                case "enabled": getEnabled = true; break;
+                case "disabled": getEnabled = false; break;
+                default:
+                    logger.logp(Level.INFO, className, "parsePublish", "invalid attribute: " + nodeGet);
+                    logger.exiting(className, "parsePublish", null);
+                    return null;
+            }
+        }
+        
+        if (nodeNotify != null) {
+            switch (nodeNotify.getTextContent().trim()) {
+                case "enabled": notifyEnabled = true; break;
+                case "disabled": notifyEnabled = false; break;
+                default:
+                    logger.logp(Level.INFO, className, "parsePublish", "invalid attribute: " + nodeNotify);
+                    logger.exiting(className, "parsePublish", null);
+                    return null;
+            }
+        }
         
         NodeList nodeList = publishNode.getChildNodes();
         
@@ -133,13 +175,19 @@ public class RulesParser {
             }
         }
         
-        if (address == null || eoj == null || propertyRules.size() == 0 || interval == -1 || topic == null) {
+        if (interval == -1 && getEnabled) {
+            logger.logp(Level.INFO, className, "parsePublish", "interval node is required for Get: " + publishNode);
+            logger.exiting(className, "parsePublish", null);
+            return null;
+        }
+        
+        if (address == null || eoj == null || propertyRules.size() == 0 || topic == null) {
             logger.logp(Level.INFO, className, "parsePublish", "invalid contents: " + publishNode);
             logger.exiting(className, "parsePublish", null);
             return null;
         }
         
-        PublishRule result = new PublishRule(address, eoj, interval, topic, propertyRules);
+        PublishRule result = new PublishRule(address, eoj, interval, topic, propertyRules, getEnabled, notifyEnabled);
         logger.exiting(className, "parsePublish", result);
         return result;
     }

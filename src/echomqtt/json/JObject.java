@@ -10,18 +10,18 @@ import java.util.logging.Logger;
  *
  * @author ymakino
  */
-public class JsonObject extends JsonValue {
-    private static final Logger logger = Logger.getLogger(JsonObject.class.getName());
-    private static final String className = JsonObject.class.getName();
+public class JObject extends JValue {
+    private static final Logger logger = Logger.getLogger(JObject.class.getName());
+    private static final String className = JObject.class.getName();
     
-    private HashMap<String, JsonValue> valueMap;
+    private HashMap<String, JValue> valueMap;
     
-    protected JsonObject(Map<String, ? extends JsonValue> valueMap) {
-        logger.entering(className, "JsonObject", valueMap);
+    protected JObject(Map<String, ? extends JValue> valueMap) {
+        logger.entering(className, "JObject", valueMap);
         
-        this.valueMap = new HashMap<String, JsonValue>(valueMap);
+        this.valueMap = new HashMap<String, JValue>(valueMap);
         
-        logger.exiting(className, "JsonObject");
+        logger.exiting(className, "JObject");
     }
     
     public Set<String> getMembers() {
@@ -36,51 +36,51 @@ public class JsonObject extends JsonValue {
         return valueMap.containsKey(name);
     }
     
-    public JsonValue get(String name) {
+    public JValue get(String name) {
         return valueMap.get(name);
     }
     
-    public JsonObject alterAdd(String name, JsonValue value) {
+    public JObject alterAdd(String name, JValue value) {
         logger.entering(className, "alterAdd", new Object[]{name, value});
         
-        HashMap<String, JsonValue> newValueMap = new HashMap<String, JsonValue>(valueMap);
+        HashMap<String, JValue> newValueMap = new HashMap<String, JValue>(valueMap);
         newValueMap.put(name, value);
-        JsonObject resultValue = new JsonObject(newValueMap);
+        JObject resultValue = new JObject(newValueMap);
         
         logger.exiting(className, "alterAdd", resultValue);
         return resultValue;
     }
     
-    public JsonObject alterAdd(Map<String, ? extends JsonValue> nameValueMap) {
+    public JObject alterAdd(Map<String, ? extends JValue> nameValueMap) {
         logger.entering(className, "alterAdd", nameValueMap);
         
-        HashMap<String, JsonValue> newValueMap = new HashMap<String, JsonValue>(valueMap);
+        HashMap<String, JValue> newValueMap = new HashMap<String, JValue>(valueMap);
         newValueMap.putAll(nameValueMap);
-        JsonObject resultValue = new JsonObject(newValueMap);
+        JObject resultValue = new JObject(newValueMap);
         
         logger.exiting(className, "alterAdd", resultValue);
         return resultValue;
     }
     
-    public JsonObject alterRemove(String name) {
+    public JObject alterRemove(String name) {
         logger.entering(className, "alterRemove", name);
         
-        HashMap<String, JsonValue> newValueMap = new HashMap<String, JsonValue>(valueMap);
+        HashMap<String, JValue> newValueMap = new HashMap<String, JValue>(valueMap);
         newValueMap.remove(name);
-        JsonObject resultValue = new JsonObject(newValueMap);
+        JObject resultValue = new JObject(newValueMap);
         
         logger.exiting(className, "alterRemove", resultValue);
         return resultValue;
     }
     
-    public JsonObject alterRemove(Collection<String> names) {
+    public JObject alterRemove(Collection<String> names) {
         logger.entering(className, "alterRemove", names);
 
-        HashMap<String, JsonValue> newValueMap = new HashMap<String, JsonValue>(valueMap);
+        HashMap<String, JValue> newValueMap = new HashMap<String, JValue>(valueMap);
         for (String name : names) {
             newValueMap.remove(name);
         }
-        JsonObject resultValue = new JsonObject(newValueMap);
+        JObject resultValue = new JObject(newValueMap);
 
         logger.exiting(className, "alterRemove", resultValue);
         return resultValue;
@@ -113,11 +113,11 @@ public class JsonObject extends JsonValue {
     
     @Override
     public boolean equals(Object object) {
-        if (!(object instanceof JsonObject)) {
+        if (!(object instanceof JObject)) {
             return false;
         }
         
-        JsonObject jsonObject = (JsonObject)object;
+        JObject jsonObject = (JObject)object;
         
         if (!getMembers().equals(jsonObject.getMembers())) {
             return false;
@@ -128,7 +128,6 @@ public class JsonObject extends JsonValue {
                 return false;
             }
         }
-        
         
         return true;
     }

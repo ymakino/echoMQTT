@@ -8,42 +8,42 @@ import java.util.logging.Logger;
  *
  * @author ymakino
  */
-public class JsonNumber extends JsonValue {
-    private static final Logger logger = Logger.getLogger(JsonNumber.class.getName());
-    private static final String className = JsonNumber.class.getName();
+public class JNumber extends JValue {
+    private static final Logger logger = Logger.getLogger(JNumber.class.getName());
+    private static final String className = JNumber.class.getName();
     
     private BigDecimal value;
     
-    protected JsonNumber(long value) {
-        logger.entering(className, "JsonNumber", value);
+    protected JNumber(long value) {
+        logger.entering(className, "JNumber", value);
         
         this.value = BigDecimal.valueOf(value);
         
-        logger.exiting(className, "JsonNumber");
+        logger.exiting(className, "JNumber");
     }
     
-    protected JsonNumber(double value) {
-        logger.entering(className, "JsonNumber", value);
+    protected JNumber(double value) {
+        logger.entering(className, "JNumber", value);
         
         this.value = BigDecimal.valueOf(value);
         
-        logger.exiting(className, "JsonNumber");
+        logger.exiting(className, "JNumber");
     }
     
-    protected JsonNumber(String value) {
-        logger.entering(className, "JsonNumber", value);
+    protected JNumber(String value) {
+        logger.entering(className, "JNumber", value);
         
         this.value = new BigDecimal(value);
         
-        logger.exiting(className, "JsonNumber");
+        logger.exiting(className, "JNumber");
     }
     
-    protected JsonNumber(BigDecimal value) {
-        logger.entering(className, "JsonNumber", value);
+    protected JNumber(BigDecimal value) {
+        logger.entering(className, "JNumber", value);
         
         this.value = value;
         
-        logger.exiting(className, "JsonNumber");
+        logger.exiting(className, "JNumber");
     }
     
     public BigDecimal getValue() {
@@ -68,11 +68,11 @@ public class JsonNumber extends JsonValue {
     
     @Override
     public boolean equals(Object object) {
-        if (!(object instanceof JsonNumber)) {
+        if (!(object instanceof JNumber)) {
             return false;
         }
         
-        JsonNumber value = (JsonNumber)object;
+        JNumber value = (JNumber)object;
         
         return value.getValue().equals(getValue());
     }

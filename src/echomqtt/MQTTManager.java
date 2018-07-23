@@ -1,5 +1,7 @@
 package echomqtt;
 
+import echomqtt.json.JObject;
+import echomqtt.json.JsonEncoderException;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,6 +23,7 @@ public class MQTTManager {
     
     private String broker;
     private String clientId;
+    private int publishQoS;
     private MqttClient client;
     
     private LinkedList<MQTTListener> listeners;
@@ -47,6 +50,7 @@ public class MQTTManager {
             logger.entering(className, "MQTTManagerCallback.messageArrived", new Object[]{topic, mm});
             
             String payload = new String(mm.getPayload());
+            
             for (MQTTListener listener : cloneListeners()) {
                 listener.arrived(topic, payload);
             }
@@ -68,10 +72,19 @@ public class MQTTManager {
             
         this.broker = broker;
         this.clientId = clientId;
+        publishQoS = 0;
         client = null;
         listeners = new LinkedList<MQTTListener>();
         
         logger.exiting(className, "MQTTManager");
+    }
+    
+    public void setPublishQoS(int publishQoS) {
+        logger.entering(className, "setPublishQos", publishQoS);
+        
+        this.publishQoS = publishQoS;
+        
+        logger.exiting(className, "setPublishQos");
     }
     
     public boolean addListener(MQTTListener listener) {
@@ -140,20 +153,21 @@ public class MQTTManager {
         return result;
     }
     
-    public void publish(PublishRule publishRule, String value) throws PublisherException {
-        logger.entering(className, "publish", new Object[]{publishRule, value});
+    public void publish(PublishRule publishRule, JObject jobject) throws PublisherException, JsonEncoderException {
+        logger.entering(className, "publish", new Object[]{publishRule, jobject});
         
         String topic = publishRule.getTopic();
+        String payload = jobject.toJSON();
         
-        logger.logp(Level.INFO, className, "publish", "Topic: " + topic + ", Payload: " + value);
+        logger.logp(Level.INFO, className, "publish", "Topic: " + topic + ", Payload: " + payload);
         
         if (!isConnected()) {
             connect(false);
         }
         
         try {
-            MqttMessage message = new MqttMessage(value.getBytes());
-            message.setQos(0);
+            MqttMessage message = new MqttMessage(payload.getBytes());
+            message.setQos(publishQoS);
             message.setRetained(false);
             client.publish(topic, message);
         } catch (MqttException me) {

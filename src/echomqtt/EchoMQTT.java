@@ -12,7 +12,7 @@ import java.net.SocketException;
 import java.util.LinkedList;
 import java.util.logging.Logger;
 import javax.xml.parsers.ParserConfigurationException;
-import echomqtt.json.JsonDecoder;
+import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.xml.sax.SAXException;
 
 /**
@@ -30,8 +30,35 @@ public class EchoMQTT {
     private LinkedList<Rules> rulesList;
     private boolean working;
     
-    private LinkedList<PublishTask> publishTasks;
-    private LinkedList<SubscribeTask> subscribeTasks;
+    private LinkedList<GetTask> getTasks;
+    private LinkedList<SetTask> setTasks;
+    private LinkedList<NotifyTask> notifyTasks;
+    
+    public EchoMQTT(Core core) throws PublisherException {
+        logger.entering(className, "EchoMQTT", new Object[]{core, broker, clientId});
+        
+        service = new Service(core);
+        this.broker = "tcp://localhost:1883";
+        this.clientId = MqttClient.generateClientId();
+        mqttManager = new MQTTManager(broker, clientId);
+        rulesList = new LinkedList<Rules>();
+        working = false;
+        
+        logger.exiting(className, "EchoMQTT");
+    }
+    
+    public EchoMQTT(Core core, String broker) throws PublisherException {
+        logger.entering(className, "EchoMQTT", new Object[]{core, broker, clientId});
+        
+        service = new Service(core);
+        this.broker = broker;
+        this.clientId = MqttClient.generateClientId();
+        mqttManager = new MQTTManager(broker, clientId);
+        rulesList = new LinkedList<Rules>();
+        working = false;
+        
+        logger.exiting(className, "EchoMQTT");
+    }
     
     public EchoMQTT(Core core, String broker, String clientId) throws PublisherException {
         logger.entering(className, "EchoMQTT", new Object[]{core, broker, clientId});
@@ -46,31 +73,62 @@ public class EchoMQTT {
         logger.exiting(className, "EchoMQTT");
     }
     
-    public PublishTask createPublishTask(PublishRule rule) throws SubnetException {
-        logger.entering(className, "createPublishTask", rule);
+    public void setPublishQoS(int publishQoS) {
+        logger.entering(className, "setPublishQoS", publishQoS);
         
-        PublishTask task = new PublishTask(service, mqttManager, rule);
+        mqttManager.setPublishQoS(publishQoS);
         
-        logger.exiting(className, "createPublishTask", task);
+        logger.exiting(className, "setPublishQoS");
+    }
+    
+    public GetTask createGetTask(PublishRule rule) throws SubnetException {
+        logger.entering(className, "createGetTask", rule);
+        
+        GetTask task = new GetTask(service, mqttManager, rule);
+        
+        logger.exiting(className, "createGetTask", task);
         return task;
     }
     
-    private void startPublishTask(Rules rules) throws SubnetException {
+    private void startGetTask(Rules rules) throws SubnetException {
         for (PublishRule publishRule: rules.getPublishRules()) {
-            PublishTask publishTask = new PublishTask(service, mqttManager, publishRule);
-            if (publishTask.start()) {
-                publishTasks.add(publishTask);
+            if (!publishRule.isGetEnabled()) {
+                continue;
+            }
+            
+            GetTask getTask = new GetTask(service, mqttManager, publishRule);
+            if (getTask.start()) {
+                getTasks.add(getTask);
             }
         }
     }
     
-    private void startSubscribeTask(Rules rules) {
+    private void startSetTask(Rules rules) {
         for (SubscribeRule subscribeRule: rules.getSubscribeRules()) {
-            SubscribeTask subscribeTask = new SubscribeTask(service, mqttManager, subscribeRule);
-            if (subscribeTask.start()) {
-                subscribeTasks.add(subscribeTask);
+            SetTask setTask = new SetTask(service, mqttManager, subscribeRule);
+            if (setTask.start()) {
+                setTasks.add(setTask);
             }
         }
+    }
+    
+    private void startNotifyTask(Rules rules) throws SubnetException {
+        logger.entering(className, "startNotifyTask", rules);
+        
+        NotifyTask notifyTask = new NotifyTask(service, mqttManager);
+        
+        for (PublishRule publishRule: rules.getPublishRules()) {
+            if (!publishRule.isNotifyEnabled()) {
+                continue;
+            }
+            
+            notifyTask.addRule(publishRule);
+        }
+        
+        notifyTask.start();
+        notifyTasks.add(notifyTask);
+        
+        logger.exiting(className, "startNotifyTask");
     }
     
     public synchronized boolean start() throws SubnetException, PublisherException {
@@ -83,15 +141,20 @@ public class EchoMQTT {
         
         mqttManager.connect(true);
         
-        publishTasks = new LinkedList<PublishTask>();
-        subscribeTasks = new LinkedList<SubscribeTask>();
+        getTasks = new LinkedList<GetTask>();
+        setTasks = new LinkedList<SetTask>();
+        notifyTasks = new LinkedList<NotifyTask>();
         
         for (Rules rules : rulesList) {
-            startPublishTask(rules);
+            startGetTask(rules);
         }
         
         for (Rules rules : rulesList) {
-            startSubscribeTask(rules);
+            startSetTask(rules);
+        }
+        
+        for (Rules rules : rulesList) {
+            startNotifyTask(rules);
         }
         
         working = true;
@@ -108,12 +171,16 @@ public class EchoMQTT {
             return false;
         }
         
-        for (PublishTask publishTask : publishTasks) {
-            publishTask.cancel();
+        for (GetTask getTask : getTasks) {
+            getTask.cancel();
         }
         
-        for (SubscribeTask subscribeTask : subscribeTasks) {
-            subscribeTask.cancel();
+        for (SetTask setTask : setTasks) {
+            setTask.cancel();
+        }
+        
+        for (NotifyTask notifyTask : notifyTasks) {
+            notifyTask.cancel();
         }
         
         mqttManager.disconnect();
@@ -133,7 +200,7 @@ public class EchoMQTT {
     }
     
     public static void showUsage(String name) {
-        System.out.println("Usage: " + name + " [ -i interface ] [ -b broker ] [ -c clientId ] [ xmlfile... ]");
+        System.out.println("Usage: " + name + " [ -i interface ] [ -b broker ] [ -c clientId ] [ -q publishQoS ] [ xmlfile... ]");
     }
 
     /**
@@ -141,14 +208,17 @@ public class EchoMQTT {
      */
     public static void main(String[] args) throws SubnetException, TooManyObjectsException, SocketException, IOException, PublisherException, ParserConfigurationException, SAXException, InterruptedException {
         String broker = "tcp://127.0.0.1:1883";
-        String clientId = "echoMQTT";
+        String clientId = MqttClient.generateClientId();
+        int publishQoS = -1;
         NetworkInterface nif = null;
         
         LinkedList<String> ruleFiles = new LinkedList<String>();
         
         // LoggerConfig.changeLogLevelAll(RulesParser.class.getName());
-        // LoggerConfig.changeLogLevelAll(PublishTask.class.getName());
+        // LoggerConfig.changeLogLevelAll(NotifyTask.class.getName());
+        // LoggerConfig.changeLogLevelAll(GetTask.class.getName());
         // LoggerConfig.changeLogLevelAll(JsonDecoder.class.getName());
+        // LoggerConfig.changeLogLevelAll(SetTask.class.getName());
         // LoggerConfig.changeLogLevelAll(echomqtt.converter.Map.class.getName());
         // LoggerConfig.changeLogLevelAll(echomqtt.converter.Float.class.getName());
         // LoggerConfig.changeLogLevelAll(echomqtt.converter.Integer.class.getName());
@@ -171,6 +241,9 @@ public class EchoMQTT {
                 case "-b":
                     broker = args[++i];
                     break;
+                case "-q":
+                    publishQoS = Integer.parseInt(args[++i]);
+                    break;
                 case "-x":
                     ruleFiles.add(args[++i]);
                     break;
@@ -181,8 +254,9 @@ public class EchoMQTT {
         }
         
         if (ruleFiles.size() == 0) {
+            System.err.println("rule files are required");
             showUsage("EchoMQTT");
-            return;
+            System.exit(1);
         }
         
         Core core;
@@ -197,9 +271,18 @@ public class EchoMQTT {
         
         EchoMQTT echomqtt = new EchoMQTT(core, broker, clientId);
         
+        if (publishQoS >= 0) {
+            echomqtt.setPublishQoS(publishQoS);
+        }
+        
         RulesParser parser = new RulesParser();
         
         for (String ruleFile : ruleFiles) {
+            Rules rules = parser.parseXMLFile(ruleFile);
+            if (rules == null) {
+                showUsage("EchoMQTT");
+                System.exit(1);
+            }
             echomqtt.addRules(parser.parseXMLFile(ruleFile));
         }
         

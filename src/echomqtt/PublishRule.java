@@ -16,13 +16,17 @@ public class PublishRule {
     private int interval;
     private String topic;
     private List<PropertyRule> propertyRules;
+    private boolean getEnabled;
+    private boolean notifyEnabled;
     
-    public PublishRule(String address, EOJ eoj, int interval, String topic, Collection<PropertyRule> propertieRules) {
+    public PublishRule(String address, EOJ eoj, int interval, String topic, Collection<PropertyRule> propertieRules, boolean getEnabled, boolean notifyEnabled) {
         this.address = address;
         this.eoj = eoj;
         this.interval = interval;
         this.topic = topic;
         this.propertyRules = new LinkedList<PropertyRule>(propertieRules);
+        this.getEnabled = getEnabled;
+        this.notifyEnabled = notifyEnabled;
     }
     
     public String getAddress() {
@@ -53,6 +57,14 @@ public class PublishRule {
         return new ArrayList<PropertyRule>(propertyRules);
     }
     
+    public boolean isGetEnabled() {
+        return getEnabled;
+    }
+    
+    public boolean isNotifyEnabled() {
+        return notifyEnabled;
+    }
+    
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
@@ -62,6 +74,8 @@ public class PublishRule {
         builder.append("eoj: ").append(eoj).append(", ");
         builder.append("interval: ").append(interval).append(", ");
         builder.append("topic: ").append(topic).append(", ");
+        builder.append("get: ").append(getEnabled).append(", ");
+        builder.append("notify: ").append(notifyEnabled).append(", ");
         
         String sep = "";
         builder.append("propertyRules: [");

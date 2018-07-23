@@ -1,6 +1,9 @@
 package echomqtt.converter;
 
+import echomqtt.json.JValue;
+import echomqtt.json.JsonDecoderException;
 import echowand.common.Data;
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.logging.Logger;
@@ -9,7 +12,7 @@ import java.util.logging.Logger;
  *
  * @author ymakino
  */
-public class Float implements Converter {
+public class Float extends Converter {
     private static final Logger logger = Logger.getLogger(Float.class.getName());
     private static final String className = Float.class.getName();
     
@@ -40,19 +43,33 @@ public class Float implements Converter {
     }
     
     @Override
-    public String convertData(Data data) {
-        logger.entering(className, "convertData", data);
+    public JValue convert(Data data) {
+        logger.entering(className, "convert", data);
         
-        String result = String.format("%.1f", Integer.s(data) / divide);
-        logger.exiting(className, "convertData", result);
+        BigDecimal num = new BigDecimal(Integer.s(data)).divide(new BigDecimal(divide));
+        
+        JValue result = JValue.newNumber(num);
+        logger.exiting(className, "convert", result);
         return result;
     }
 
     @Override
-    public Data convertString(String str) {
-        logger.entering(className, "convertString", str);
+    public Data convert(JValue jvalue) throws ConverterException {
+        logger.entering(className, "convert", jvalue);
         
-        BigInteger num = BigInteger.valueOf((long)(Double.parseDouble(str) * divide));
+        BigDecimal value;
+        
+        if (jvalue.isNumber()) {
+            value = jvalue.asNumber().getValue();
+        } else if (jvalue.isString()) {
+            value = new BigDecimal(jvalue.asString().getValue());
+        } else {
+            ConverterException exception = new ConverterException("invalid value: " + jvalue);
+            logger.throwing(className, "convert", exception);
+            throw exception;
+        }
+        
+        BigInteger num = value.multiply(BigDecimal.valueOf(divide)).toBigInteger();
         
         byte[] buf = new byte[size];
         
@@ -61,7 +78,7 @@ public class Float implements Converter {
         }
         
         Data result = new Data(buf);
-        logger.exiting(className, "convertString", result);
+        logger.exiting(className, "convert", result);
         return result;
     }
     
@@ -77,15 +94,15 @@ public class Float implements Converter {
         return builder.toString();
     }
     
-    public static void main(String[] args) throws ConverterException {
+    public static void main(String[] args) throws ConverterException, JsonDecoderException {
         HashMap<String, String> map = new HashMap<String, String>();
         map.put("size", "2");
         map.put("divide", "10");
         Converter c1 = new Float(map);
         
-        Data d = c1.convertString("1024.6");
+        Data d = c1.convert(JValue.parseJSON("1024.6"));
         System.out.println(d);
-        System.out.println(c1.convertData(d));
-        System.out.println(c1.convertString("1024.6"));
+        System.out.println(c1.convert(d));
+        System.out.println(c1.convert(JValue.parseJSON("1024.6")));
     }
 }

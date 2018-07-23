@@ -1,6 +1,10 @@
 package echomqtt;
 
 import echomqtt.converter.ConverterException;
+import echomqtt.json.JObject;
+import echomqtt.json.JString;
+import echomqtt.json.JValue;
+import echomqtt.json.JsonEncoderException;
 import echowand.common.Data;
 import echowand.common.EOJ;
 import echowand.common.EPC;
@@ -11,6 +15,11 @@ import echowand.service.result.GetListener;
 import echowand.service.result.GetResult;
 import echowand.service.result.ResultData;
 import echowand.service.result.ResultFrame;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -23,9 +32,9 @@ import java.util.logging.Logger;
  *
  * @author ymakino
  */
-public class PublishTask {
-    private static final Logger logger = Logger.getLogger(PublishTask.class.getName());
-    private static final String className = PublishTask.class.getName();
+public class GetTask {
+    private static final Logger logger = Logger.getLogger(GetTask.class.getName());
+    private static final String className = GetTask.class.getName();
     
     private Service service;
     private MQTTManager mqttManager;
@@ -38,8 +47,8 @@ public class PublishTask {
     
     private boolean working = false;
     
-    public PublishTask(Service service, MQTTManager mqttManager, PublishRule rule) throws SubnetException {
-        logger.entering(className, "PublishTask", new Object[]{service, mqttManager, rule});
+    public GetTask(Service service, MQTTManager mqttManager, PublishRule rule) throws SubnetException {
+        logger.entering(className, "GetTask", new Object[]{service, mqttManager, rule});
         
         this.service = service;
         this.mqttManager = mqttManager;
@@ -59,7 +68,7 @@ public class PublishTask {
             }
         }
         
-        logger.exiting(className, "PublishTask");
+        logger.exiting(className, "GetTask");
     }
     
     private class PublishTimerTask extends TimerTask {
@@ -68,21 +77,23 @@ public class PublishTask {
             logger.entering(className, "PublishTimerTask.doGet", new Object[]{service, mqttManager, rule});
         
             service.doGet(node, eoj, epcs, timeout, new GetListener() {
-                HashMap<String, String> jsonMap = new HashMap<String, String>();
+                HashMap<String, JValue> jsonMap = new HashMap<String, JValue>();
 
                 private boolean generate(EPC epc, Data data) throws ConverterException {
                     logger.entering(className, "PublishTimerTask.generate", new Object[]{epc, data});
+                    
+                    boolean result = false;
                     
                     for (int i=0; i<rule.countPropertieRules(); i++) {
                         PropertyRule propertyRule = rule.getPropertyRuleAt(i);
                         if (!data.isEmpty() && propertyRule.getEPC() == epc) {
                             String key = propertyRule.getName();
-                            String value = propertyRule.getConverter().convertData(data);
+                            JValue value = propertyRule.getConverter().convert(data);
                             jsonMap.put(key, value);
+                            result = true;
                         }
                     }
                     
-                    boolean result = jsonMap.size() > 0;
                     logger.exiting(className, "PublishTimerTask.generate", result);
                     return result;
                 }
@@ -95,7 +106,7 @@ public class PublishTask {
                         List<ResultData> resultDataList = result.getDataList(resultFrame, true);
                         
                         for (ResultData resultData: resultDataList) {
-                                generate(resultData.getEPC(), resultData.getActualData());
+                            generate(resultData.getEPC(), resultData.getActualData());
                         }
 
                         if (jsonMap.size() == rule.countPropertieRules()) {
@@ -127,22 +138,19 @@ public class PublishTask {
                         logger.logp(Level.INFO, className, "PublishTimerTask.finish", "invalid data: " + node + " " + eoj + " " + epcs);
                         return;
                     }
-                    
-                    String delimiter = "";
-                    StringBuilder builder = new StringBuilder("{");
 
-                    for (String key: jsonMap.keySet()) {
-                        builder.append(delimiter);
-                        builder.append('"').append(key).append('"').append(':');
-                        builder.append(jsonMap.get(key));
-                        delimiter = ",";
+                    if (!jsonMap.keySet().contains("timestamp")) {
+                        LocalDateTime localDateTime = LocalDateTime.now();
+                        ZonedDateTime zonedDateTime = ZonedDateTime.of(localDateTime, ZoneId.systemDefault());
+                        jsonMap.put("timestamp", JValue.newString(DateTimeFormatter.ISO_INSTANT.format(zonedDateTime)));
                     }
-
-                    builder.append("}");
-
+                    
                     try {
-                        mqttManager.publish(rule, builder.toString());
+                        JObject jobject = JValue.newObject(jsonMap);
+                        mqttManager.publish(rule, jobject);
                     } catch (PublisherException ex) {
+                        logger.logp(Level.INFO, className, "PublishTimerTask.finish", "catched exception", ex);
+                    } catch (JsonEncoderException ex) {
                         logger.logp(Level.INFO, className, "PublishTimerTask.finish", "catched exception", ex);
                     }
                 }

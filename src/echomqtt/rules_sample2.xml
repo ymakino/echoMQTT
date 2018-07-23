@@ -6,18 +6,18 @@
       <epc>E0</epc>
       <name>temperature</name>
       <converter>
-          <class>Float</class>
-          <param><name>size</name><value>2</value></param>
-          <param><name>divide</name><value>10</value></param>
+        <class>Float</class>
+        <param><name>size</name><value>2</value></param>
+        <param><name>divide</name><value>10</value></param>
       </converter>
     </property>
     <property>
       <epc>E0</epc>
       <name>temperature1</name>
       <converter>
-          <class>Float</class>
-          <param><name>size</name><value>2</value></param>
-          <param><name>divide</name><value>10</value></param>
+        <class>Float</class>
+        <param><name>size</name><value>2</value></param>
+        <param><name>divide</name><value>10</value></param>
       </converter>
     </property>
     <interval>10000</interval>
@@ -30,18 +30,18 @@
       <epc>E0</epc>
       <name>humidity</name>
       <converter>
-          <class>Integer</class>
-          <param><name>unsigned</name><value>true</value></param>
-          <param><name>size</name><value>1</value></param>
+        <class>Integer</class>
+        <param><name>unsigned</name><value>true</value></param>
+        <param><name>size</name><value>1</value></param>
       </converter>
     </property>
     <property>
       <epc>E0</epc>
       <name>humidity2</name>
       <converter>
-          <class>Integer</class>
-          <param><name>unsigned</name><value>true</value></param>
-          <param><name>size</name><value>1</value></param>
+        <class>Integer</class>
+        <param><name>unsigned</name><value>true</value></param>
+        <param><name>size</name><value>1</value></param>
       </converter>
     </property>
     <interval>10000</interval>
@@ -54,18 +54,18 @@
       <epc>E0</epc>
       <name>temperature</name>
       <converter>
-          <class>Float</class>
-          <param><name>size</name><value>2</value></param>
-          <param><name>divide</name><value>10</value></param>
+        <class>Float</class>
+        <param><name>size</name><value>2</value></param>
+        <param><name>divide</name><value>10</value></param>
       </converter>
     </property>
     <property>
       <epc>E0</epc>
       <name>temperature3</name>
       <converter>
-          <class>Float</class>
-          <param><name>size</name><value>2</value></param>
-          <param><name>divide</name><value>10</value></param>
+        <class>Float</class>
+        <param><name>size</name><value>2</value></param>
+        <param><name>divide</name><value>10</value></param>
       </converter>
     </property>
     <interval>10000</interval>
@@ -78,18 +78,18 @@
       <epc>E0</epc>
       <name>humidity</name>
       <converter>
-          <class>Integer</class>
-          <param><name>unsigned</name><value>true</value></param>
-          <param><name>size</name><value>1</value></param>
+        <class>Integer</class>
+        <param><name>unsigned</name><value>true</value></param>
+        <param><name>size</name><value>1</value></param>
       </converter>
     </property>
     <property>
       <epc>E0</epc>
       <name>humidity4</name>
       <converter>
-          <class>Integer</class>
-          <param><name>unsigned</name><value>true</value></param>
-          <param><name>size</name><value>1</value></param>
+        <class>Integer</class>
+        <param><name>unsigned</name><value>true</value></param>
+        <param><name>size</name><value>1</value></param>
       </converter>
     </property>
     <interval>10000</interval>
@@ -102,18 +102,18 @@
       <epc>E0</epc>
       <name>airpressure</name>
       <converter>
-          <class>Float</class>
-          <param><name>size</name><value>2</value></param>
-          <param><name>divide</name><value>10</value></param>
+        <class>Float</class>
+        <param><name>size</name><value>2</value></param>
+        <param><name>divide</name><value>10</value></param>
       </converter>
     </property>
     <property>
       <epc>E0</epc>
       <name>airpressure5</name>
       <converter>
-          <class>Float</class>
-          <param><name>size</name><value>2</value></param>
-          <param><name>divide</name><value>10</value></param>
+        <class>Float</class>
+        <param><name>size</name><value>2</value></param>
+        <param><name>divide</name><value>10</value></param>
       </converter>
     </property>
     <interval>10000</interval>
@@ -126,18 +126,18 @@
       <epc>E0</epc>
       <name>temperature</name>
       <converter>
-          <class>Float</class>
-          <param><name>size</name><value>2</value></param>
-          <param><name>divide</name><value>10</value></param>
+        <class>Float</class>
+        <param><name>size</name><value>2</value></param>
+        <param><name>divide</name><value>10</value></param>
       </converter>
     </property>
     <property>
       <epc>E0</epc>
       <name>temperature6</name>
       <converter>
-          <class>Float</class>
-          <param><name>size</name><value>2</value></param>
-          <param><name>divide</name><value>10</value></param>
+        <class>Float</class>
+        <param><name>size</name><value>2</value></param>
+        <param><name>divide</name><value>10</value></param>
       </converter>
     </property>
     <interval>10000</interval>
@@ -150,18 +150,18 @@
       <epc>E0</epc>
       <name>humidity</name>
       <converter>
-          <class>Integer</class>
-          <param><name>unsigned</name><value>true</value></param>
-          <param><name>size</name><value>1</value></param>
+        <class>Integer</class>
+        <param><name>unsigned</name><value>true</value></param>
+        <param><name>size</name><value>1</value></param>
       </converter>
     </property>
     <property>
       <epc>E0</epc>
       <name>humidity7</name>
       <converter>
-          <class>Integer</class>
-          <param><name>unsigned</name><value>true</value></param>
-          <param><name>size</name><value>1</value></param>
+        <class>Integer</class>
+        <param><name>unsigned</name><value>true</value></param>
+        <param><name>size</name><value>1</value></param>
       </converter>
     </property>
     <interval>10000</interval>
@@ -174,27 +174,27 @@
       <epc>E0</epc>
       <name>co2</name>
       <converter>
-          <class>Integer</class>
-          <param><name>unsigned</name><value>true</value></param>
-          <param><name>size</name><value>2</value></param>
+        <class>Integer</class>
+        <param><name>unsigned</name><value>true</value></param>
+        <param><name>size</name><value>2</value></param>
       </converter>
     </property>
     <property>
       <epc>E0</epc>
       <name>eco2</name>
       <converter>
-          <class>Integer</class>
-          <param><name>unsigned</name><value>true</value></param>
-          <param><name>size</name><value>2</value></param>
+        <class>Integer</class>
+        <param><name>unsigned</name><value>true</value></param>
+        <param><name>size</name><value>2</value></param>
       </converter>
     </property>
     <property>
       <epc>E0</epc>
       <name>eco2_1</name>
       <converter>
-          <class>Integer</class>
-          <param><name>unsigned</name><value>true</value></param>
-          <param><name>size</name><value>2</value></param>
+        <class>Integer</class>
+        <param><name>unsigned</name><value>true</value></param>
+        <param><name>size</name><value>2</value></param>
       </converter>
     </property>
     <interval>10000</interval>
@@ -207,31 +207,132 @@
       <epc>E0</epc>
       <name>tvoc</name>
       <converter>
-          <class>Integer</class>
-          <param><name>unsigned</name><value>true</value></param>
-          <param><name>size</name><value>2</value></param>
+        <class>Integer</class>
+        <param><name>unsigned</name><value>true</value></param>
+        <param><name>size</name><value>2</value></param>
       </converter>
     </property>
     <property>
       <epc>E0</epc>
       <name>etvoc</name>
       <converter>
-          <class>Integer</class>
-          <param><name>unsigned</name><value>true</value></param>
-          <param><name>size</name><value>2</value></param>
+        <class>Integer</class>
+        <param><name>unsigned</name><value>true</value></param>
+        <param><name>size</name><value>2</value></param>
       </converter>
     </property>
     <property>
       <epc>E0</epc>
       <name>etvoc_1</name>
       <converter>
-          <class>Integer</class>
-          <param><name>unsigned</name><value>true</value></param>
-          <param><name>size</name><value>2</value></param>
+        <class>Integer</class>
+        <param><name>unsigned</name><value>true</value></param>
+        <param><name>size</name><value>2</value></param>
       </converter>
     </property>
     <interval>10000</interval>
     <topic>devices/device9/event</topic>
+  </publish>
+  <publish>
+    <address>150.65.231.27</address>
+    <eoj>001101</eoj>
+    <property>
+      <epc>E0</epc>
+      <name>temperature</name>
+      <converter>
+        <class>Float</class>
+        <param><name>size</name><value>2</value></param>
+        <param><name>divide</name><value>10</value></param>
+      </converter>
+    </property>
+    <property>
+      <epc>E0</epc>
+      <name>temperature12</name>
+      <converter>
+        <class>Float</class>
+        <param><name>size</name><value>2</value></param>
+        <param><name>divide</name><value>10</value></param>
+      </converter>
+    </property>
+    <interval>10000</interval>
+    <topic>devices/device12/event</topic>
+  </publish>
+  <publish>
+    <address>150.65.231.27</address>
+    <eoj>001201</eoj>
+    <property>
+      <epc>E0</epc>
+      <name>humidity</name>
+      <converter>
+        <class>Integer</class>
+        <param><name>unsigned</name><value>true</value></param>
+        <param><name>size</name><value>1</value></param>
+      </converter>
+    </property>
+    <property>
+      <epc>E0</epc>
+      <name>humidity13</name>
+      <converter>
+        <class>Integer</class>
+        <param><name>unsigned</name><value>true</value></param>
+        <param><name>size</name><value>1</value></param>
+      </converter>
+    </property>
+    <interval>10000</interval>
+    <topic>devices/device13/event</topic>
+  </publish>
+  <publish>
+    <address>150.65.231.27</address>
+    <eoj>002d01</eoj>
+    <property>
+      <epc>E0</epc>
+      <name>airpressure</name>
+      <converter>
+        <class>Float</class>
+        <param><name>size</name><value>2</value></param>
+        <param><name>divide</name><value>10</value></param>
+      </converter>
+    </property>
+    <property>
+      <epc>E0</epc>
+      <name>airpressure14</name>
+      <converter>
+        <class>Float</class>
+        <param><name>size</name><value>2</value></param>
+        <param><name>divide</name><value>10</value></param>
+      </converter>
+    </property>
+    <interval>10000</interval>
+    <topic>devices/device14/event</topic>
+  </publish>
+  
+  <publish get="disabled" notify="enabled">
+    <address>150.65.231.21</address>
+    <eoj>001101</eoj>
+    <property>
+      <epc>81</epc>
+      <name>error</name>
+      <converter>
+        <class>Integer</class>
+        <param><name>unsigned</name><value>true</value></param>
+        <param><name>size</name><value>1</value></param>
+      </converter>
+    </property>
+    <topic>devices/device15/event</topic>
+  </publish>
+  
+  <publish get="disabled" notify="enabled">
+    <address>150.65.231.21</address>
+    <eoj>001101</eoj>
+    <property>
+      <epc>F0</epc>
+      <name>heater</name>
+      <converter>
+        <class>Map</class>
+        <param><name>mapping</name><value>{"30":"ON","31":"OFF"}</value></param>
+      </converter>
+    </property>
+    <topic>devices/device16/event</topic>
   </publish>
 
   <subscribe>
@@ -241,8 +342,8 @@
       <epc>80</epc>
       <name>lighting</name>
       <converter>
-          <class>Map</class>
-          <param><name>mapping</name><value>{"ON":"30","OFF":"31"}</value></param>
+        <class>Map</class>
+        <param><name>mapping</name><value>{"ON":"30","OFF":"31"}</value></param>
       </converter>
     </property>
     <topic>devices/device10/event</topic>
@@ -254,8 +355,8 @@
       <epc>F0</epc>
       <name>heater</name>
       <converter>
-          <class>Map</class>
-          <param><name>mapping</name><value>{"ON":"30","OFF":"31"}</value></param>
+        <class>Map</class>
+        <param><name>mapping</name><value>{"ON":"30","OFF":"31"}</value></param>
       </converter>
     </property>
     <topic>devices/device11/event</topic>

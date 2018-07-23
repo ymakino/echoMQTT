@@ -16,10 +16,10 @@ public class JsonEncoder {
     private static final Logger logger = Logger.getLogger(JsonEncoder.class.getName());
     private static final String className = JsonEncoder.class.getName();
 
-    private JsonValue value;
+    private JValue value;
     private HashMap<Character, String> encodeMap = new HashMap<Character, String>();
 
-    public JsonEncoder(JsonValue value) {
+    public JsonEncoder(JValue value) {
         logger.entering(className, "JsonEncoder", value);
 
         this.value = value;
@@ -40,7 +40,7 @@ public class JsonEncoder {
      * @param value 数値の値の指定
      * @return 変換された文字列
      */
-    public String encodeNumber(JsonNumber value) {
+    public String encodeNumber(JNumber value) {
         logger.entering(className, "encodeNumber", value);
         String returnString = value.getValue().toPlainString();
         logger.exiting(className, "encodeNumber", returnString);
@@ -52,7 +52,7 @@ public class JsonEncoder {
      * @param value ヌル型の値の指定
      * @return 変換された文字列
      */
-    public String encodeNull(JsonNull value) {
+    public String encodeNull(JNull value) {
         logger.entering(className, "encodeNull", value);
         String returnString = "null";
         logger.exiting(className, "encodeNull", returnString);
@@ -64,7 +64,7 @@ public class JsonEncoder {
      * @param value 真偽値の指定
      * @return 変換された文字列
      */
-    public String encodeBoolean(JsonBoolean value) {
+    public String encodeBoolean(JBoolean value) {
         logger.entering(className, "encodeBoolean", value);
 
         String returnString;
@@ -109,7 +109,7 @@ public class JsonEncoder {
      * @param value 文字列の値の指定
      * @return 変換された文字列
      */
-    public String encodeString(JsonString value) {
+    public String encodeString(JString value) {
         logger.entering(className, "encodeString", value);
 
         StringBuilder builder = new StringBuilder();
@@ -128,7 +128,7 @@ public class JsonEncoder {
      * @param value 配列の値の指定
      * @return 変換された文字列
      */
-    public String encodeArray(JsonArray value) throws JsonEncoderException {
+    public String encodeArray(JArray value) throws JsonEncoderException {
         logger.entering(className, "encodeArray", value);
 
         int len = value.size();
@@ -150,7 +150,7 @@ public class JsonEncoder {
      * @param value レコードの値の指定
      * @return 変換された文字列
      */
-    public String encodeObject(JsonObject value) throws JsonEncoderException {
+    public String encodeObject(JObject value) throws JsonEncoderException {
         logger.entering(className, "encodeObject", value);
 
         boolean first = true;
@@ -172,7 +172,7 @@ public class JsonEncoder {
         return returnString;
     }
 
-    public String encodePartial(JsonValue valuePartial) throws JsonEncoderException {
+    public String encodePartial(JValue valuePartial) throws JsonEncoderException {
         logger.entering(className, "encodePartial", valuePartial);
         
         String returnString;
@@ -208,7 +208,7 @@ public class JsonEncoder {
         return returnString;
     }
     
-    public static String encode(JsonValue value) throws JsonEncoderException {
+    public static String encode(JValue value) throws JsonEncoderException {
         logger.entering(className, "encode", value);
         
         JsonEncoder encoder = new JsonEncoder(value);

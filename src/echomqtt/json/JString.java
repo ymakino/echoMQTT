@@ -6,18 +6,18 @@ import java.util.logging.Logger;
  *
  * @author ymakino
  */
-public class JsonString extends JsonValue {
-    private static final Logger logger = Logger.getLogger(JsonNumber.class.getName());
-    private static final String className = JsonNumber.class.getName();
+public class JString extends JValue {
+    private static final Logger logger = Logger.getLogger(JNumber.class.getName());
+    private static final String className = JNumber.class.getName();
     
     private String value;
     
-    protected JsonString(String value) {
-        logger.entering(className, "JsonString", value);
+    protected JString(String value) {
+        logger.entering(className, "JString", value);
         
         this.value = value;
         
-        logger.exiting(className, "JsonString");
+        logger.exiting(className, "JString");
     }
     
     public String getValue() {
@@ -42,11 +42,11 @@ public class JsonString extends JsonValue {
     
     @Override
     public boolean equals(Object object) {
-        if (!(object instanceof JsonString)) {
+        if (!(object instanceof JString)) {
             return false;
         }
         
-        JsonString valueString = (JsonString)object;
+        JString valueString = (JString)object;
         
         return valueString.getValue().equals(getValue());
     }

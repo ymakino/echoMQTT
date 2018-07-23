@@ -223,7 +223,7 @@ public class JsonDecoder {
         logger.exiting(className, "skipSpaces");
     }
 
-    private JsonValue parseNumberWithSign(int sign) throws JsonDecoderException {
+    private JValue parseNumberWithSign(int sign) throws JsonDecoderException {
         logger.entering(className, "parseNumberWithSign", sign);
         
         int firstIndex = index;
@@ -251,9 +251,9 @@ public class JsonDecoder {
             throw exception;
         }
 
-        JsonValue value;
+        JValue value;
         String substr = string.substring(firstIndex, lastIndex);
-        value = JsonValue.newNumber(new BigDecimal(substr));
+        value = JValue.newNumber(new BigDecimal(substr));
 
         logger.exiting(className, "parseNumberWithSign", value);
         return value;
@@ -267,7 +267,7 @@ public class JsonDecoder {
         return result;
     }
 
-    private JsonValue parseHexNumberWithSign(int sign) throws JsonDecoderException {
+    private JValue parseHexNumberWithSign(int sign) throws JsonDecoderException {
         logger.entering(className, "parseHexNumberWithSign", sign);
 
         consumeChar('0');
@@ -293,12 +293,12 @@ public class JsonDecoder {
         }
 
         String substr = string.substring(firstIndex, lastIndex);
-        JsonValue value = JsonValue.newNumber(new BigInteger(substr, 16));
+        JValue value = JValue.newNumber(new BigInteger(substr, 16));
         logger.exiting(className, "parseHexNumberWithSign", value);
         return value;
     }
 
-    private JsonValue parseNumber() throws JsonDecoderException {
+    private JValue parseNumber() throws JsonDecoderException {
         logger.entering(className, "parseNumber");
 
         int firstIndex = index;
@@ -310,7 +310,7 @@ public class JsonDecoder {
             firstIndex++;
         }
 
-        JsonValue value;
+        JValue value;
         if (string.startsWith("0x", firstIndex)) {
             value = parseHexNumberWithSign(sign);
         } else {
@@ -321,13 +321,13 @@ public class JsonDecoder {
         return value;
     }
 
-    private JsonValue parseNull() throws JsonDecoderException {
+    private JValue parseNull() throws JsonDecoderException {
         logger.entering(className, "parseNull");
 
-        JsonValue returnValue;
+        JValue returnValue;
         if (string.startsWith("null", index)) {
             index += "null".length();
-            returnValue = JsonValue.newNull();
+            returnValue = JValue.newNull();
         } else {
             JsonDecoderException exception = new JsonDecoderException(index);
             logger.throwing(className, "parseNull", exception);
@@ -338,16 +338,16 @@ public class JsonDecoder {
         return returnValue;
     }
 
-    private JsonValue parseBoolean() throws JsonDecoderException {
+    private JValue parseBoolean() throws JsonDecoderException {
         logger.entering(className, "parseBoolean");
 
-        JsonValue returnValue;
+        JValue returnValue;
         if (string.startsWith("true", index)) {
             index += "true".length();
-            returnValue = JsonValue.newBoolean(true);
+            returnValue = JValue.newBoolean(true);
         } else if (string.startsWith("false", index)) {
             index += "false".length();
-            returnValue = JsonValue.newBoolean(false);
+            returnValue = JValue.newBoolean(false);
         } else {
             JsonDecoderException exception = new JsonDecoderException(index);
             logger.throwing(className, "parseBoolean", exception);
@@ -358,7 +358,7 @@ public class JsonDecoder {
         return returnValue;
     }
 
-    private JsonValue parseString() throws JsonDecoderException {
+    private JValue parseString() throws JsonDecoderException {
         logger.entering(className, "parseString");
 
         StringBuilder builder = new StringBuilder();
@@ -368,7 +368,7 @@ public class JsonDecoder {
         for (int i = index; i < length; i++) {
             if (isNextDoubleQuote()) {
                 consumeChar();
-                JsonValue returnValue = JsonValue.newString(builder.toString());
+                JValue returnValue = JValue.newString(builder.toString());
                 logger.exiting(className, "parseString", returnValue);
                 return returnValue;
             }
@@ -413,7 +413,7 @@ public class JsonDecoder {
         throw exception;
     }
 
-    private JsonValue parseArray() throws JsonDecoderException {
+    private JValue parseArray() throws JsonDecoderException {
         logger.entering(className, "parseArray");
 
         consumeChar();
@@ -422,12 +422,12 @@ public class JsonDecoder {
         if (isNextArrayEnd()) {
             consumeChar();
             skipSpaces();
-            JsonValue returnValue = JsonValue.newArray();
+            JValue returnValue = JValue.newArray();
             logger.exiting(className, "parseArray", returnValue);
             return returnValue;
         }
 
-        LinkedList<JsonValue> values = new LinkedList<JsonValue>();
+        LinkedList<JValue> values = new LinkedList<JValue>();
 
         for (;;) {
 
@@ -450,21 +450,21 @@ public class JsonDecoder {
             skipSpaces();
         }
 
-        JsonValue returnValue = JsonValue.newArray(values);
+        JValue returnValue = JValue.newArray(values);
         logger.exiting(className, "parseArray", returnValue);
         return returnValue;
     }
 
-    private JsonValue parseObject() throws JsonDecoderException {
+    private JValue parseObject() throws JsonDecoderException {
         logger.entering(className, "parseObject");
 
         consumeChar();
         skipSpaces();
 
-        HashMap<String, JsonValue> values = new HashMap<String, JsonValue>();
+        HashMap<String, JValue> values = new HashMap<String, JValue>();
 
         while (!isNextObjectEnd()) {
-            JsonValue keyValue = parseString();
+            JValue keyValue = parseString();
 
             skipSpaces();
 
@@ -504,17 +504,17 @@ public class JsonDecoder {
 
         consumeChar();
 
-        JsonValue returnValue = JsonValue.newObject(values);
+        JValue returnValue = JValue.newObject(values);
         logger.exiting(className, "parseObject", returnValue);
         return returnValue;
     }
 
-    public JsonValue parsePartial() throws JsonDecoderException {
+    public JValue parsePartial() throws JsonDecoderException {
         logger.entering(className, "parsePartial");
 
         skipSpaces();
 
-        JsonValue value;
+        JValue value;
         if (isNextNumber() || isNextMinus()) {
             value = parseNumber();
         } else if (isNextBoolean()) {
@@ -539,12 +539,12 @@ public class JsonDecoder {
         return value;
     }
 
-    public JsonValue parse() throws JsonDecoderException {
+    public JValue parse() throws JsonDecoderException {
         logger.entering(className, "parse");
 
         skipSpaces();
 
-        JsonValue value = parsePartial();
+        JValue value = parsePartial();
 
         skipSpaces();
 
@@ -558,11 +558,11 @@ public class JsonDecoder {
         return value;
     }
 
-    public static JsonValue decode(String string) throws JsonDecoderException {
+    public static JValue decode(String string) throws JsonDecoderException {
         logger.entering(className, "decode", string);
         
         JsonDecoder decoder = new JsonDecoder(string);
-        JsonValue returnValue = decoder.parse();
+        JValue returnValue = decoder.parse();
         
         logger.exiting(className, "decode", returnValue);
         return returnValue;

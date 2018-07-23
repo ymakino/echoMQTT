@@ -6,14 +6,14 @@ import java.util.logging.Logger;
  *
  * @author ymakino
  */
-public class JsonNull extends JsonValue {
-    private static final Logger logger = Logger.getLogger(JsonNull.class.getName());
-    private static final String className = JsonNull.class.getName();
+public class JNull extends JValue {
+    private static final Logger logger = Logger.getLogger(JNull.class.getName());
+    private static final String className = JNull.class.getName();
     
-    public JsonNull() {
-        logger.entering(className, "JsonNull");
+    public JNull() {
+        logger.entering(className, "JNull");
         
-        logger.exiting(className, "JsonNull");
+        logger.exiting(className, "JNull");
     }
     
     public Object getValue() {
@@ -38,7 +38,7 @@ public class JsonNull extends JsonValue {
     
     @Override
     public boolean equals(Object object) {
-        return object instanceof JsonNull;
+        return object instanceof JNull;
     }
 
     @Override
