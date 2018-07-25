@@ -24,9 +24,9 @@ import java.util.logging.Logger;
  *
  * @author ymakino
  */
-public class NotifyTask {
-    private static final Logger logger = Logger.getLogger(NotifyTask.class.getName());
-    private static final String className = NotifyTask.class.getName();
+public class ObserveTask {
+    private static final Logger logger = Logger.getLogger(ObserveTask.class.getName());
+    private static final String className = ObserveTask.class.getName();
     
     private Service service;
     private MQTTManager mqttManager;
@@ -36,14 +36,14 @@ public class NotifyTask {
     
     private boolean working = false;
     
-    public NotifyTask(Service service, MQTTManager mqttManager) throws SubnetException {
-        logger.entering(className, "NotifyTask", new Object[]{service, mqttManager});
+    public ObserveTask(Service service, MQTTManager mqttManager) throws SubnetException {
+        logger.entering(className, "ObserveTask", new Object[]{service, mqttManager});
         
         this.service = service;
         this.mqttManager = mqttManager;
         publishRules = new LinkedList<PublishRule>();
         
-        logger.exiting(className, "NotifyTask");
+        logger.exiting(className, "ObserveTask");
     }
     
     public synchronized boolean start() {

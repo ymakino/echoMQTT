@@ -32,7 +32,7 @@ public class EchoMQTT {
     
     private LinkedList<GetTask> getTasks;
     private LinkedList<SetTask> setTasks;
-    private LinkedList<NotifyTask> notifyTasks;
+    private LinkedList<ObserveTask> observeTasks;
     
     public EchoMQTT(Core core) throws PublisherException {
         logger.entering(className, "EchoMQTT", new Object[]{core, broker, clientId});
@@ -90,7 +90,7 @@ public class EchoMQTT {
         return task;
     }
     
-    private void startGetTask(Rules rules) throws SubnetException {
+    private void startGetTasks(Rules rules) throws SubnetException {
         for (PublishRule publishRule: rules.getPublishRules()) {
             if (!publishRule.isGetEnabled()) {
                 continue;
@@ -103,7 +103,7 @@ public class EchoMQTT {
         }
     }
     
-    private void startSetTask(Rules rules) {
+    private void startSetTasks(Rules rules) {
         for (SubscribeRule subscribeRule: rules.getSubscribeRules()) {
             SetTask setTask = new SetTask(service, mqttManager, subscribeRule);
             if (setTask.start()) {
@@ -112,23 +112,23 @@ public class EchoMQTT {
         }
     }
     
-    private void startNotifyTask(Rules rules) throws SubnetException {
-        logger.entering(className, "startNotifyTask", rules);
+    private void startObserveTasks(Rules rules) throws SubnetException {
+        logger.entering(className, "startObserveTask", rules);
         
-        NotifyTask notifyTask = new NotifyTask(service, mqttManager);
+        ObserveTask observeTask = new ObserveTask(service, mqttManager);
         
         for (PublishRule publishRule: rules.getPublishRules()) {
             if (!publishRule.isNotifyEnabled()) {
                 continue;
             }
             
-            notifyTask.addRule(publishRule);
+            observeTask.addRule(publishRule);
         }
         
-        notifyTask.start();
-        notifyTasks.add(notifyTask);
+        observeTask.start();
+        observeTasks.add(observeTask);
         
-        logger.exiting(className, "startNotifyTask");
+        logger.exiting(className, "startObserveTask");
     }
     
     public synchronized boolean start() throws SubnetException, PublisherException {
@@ -143,18 +143,18 @@ public class EchoMQTT {
         
         getTasks = new LinkedList<GetTask>();
         setTasks = new LinkedList<SetTask>();
-        notifyTasks = new LinkedList<NotifyTask>();
+        observeTasks = new LinkedList<ObserveTask>();
         
         for (Rules rules : rulesList) {
-            startGetTask(rules);
+            startGetTasks(rules);
         }
         
         for (Rules rules : rulesList) {
-            startSetTask(rules);
+            startSetTasks(rules);
         }
         
         for (Rules rules : rulesList) {
-            startNotifyTask(rules);
+            startObserveTasks(rules);
         }
         
         working = true;
@@ -179,8 +179,8 @@ public class EchoMQTT {
             setTask.cancel();
         }
         
-        for (NotifyTask notifyTask : notifyTasks) {
-            notifyTask.cancel();
+        for (ObserveTask observeTask : observeTasks) {
+            observeTask.cancel();
         }
         
         mqttManager.disconnect();
@@ -215,7 +215,7 @@ public class EchoMQTT {
         LinkedList<String> ruleFiles = new LinkedList<String>();
         
         // LoggerConfig.changeLogLevelAll(RulesParser.class.getName());
-        // LoggerConfig.changeLogLevelAll(NotifyTask.class.getName());
+        // LoggerConfig.changeLogLevelAll(ObserveTask.class.getName());
         // LoggerConfig.changeLogLevelAll(GetTask.class.getName());
         // LoggerConfig.changeLogLevelAll(JsonDecoder.class.getName());
         // LoggerConfig.changeLogLevelAll(SetTask.class.getName());
