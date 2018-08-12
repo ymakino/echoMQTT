@@ -306,22 +306,13 @@ public class RulesParser {
         String key = null;
         String value = null;
         
-        NodeList nodeList = paramNode.getChildNodes();
+        Node nameNode = paramNode.getAttributes().getNamedItem("name");
         
-        for (int i=0; i<nodeList.getLength(); i++) {
-            Node node = nodeList.item(i);
-            if (node.getNodeType() == Node.ELEMENT_NODE) {
-                String content = node.getTextContent().trim();
-                switch (node.getNodeName()) {
-                    case "name": key = content; break;
-                    case "value": value = content;break;
-                    default: 
-                        logger.logp(Level.INFO, className, "parseParam", "invalid node: " + node.getNodeName());
-                        logger.exiting(className, "parseParam", null);
-                        return null;
-                }
-            }
+        if (nameNode != null) {
+            key = nameNode.getTextContent().trim();
         }
+        
+        value = paramNode.getTextContent();
         
         if (key == null || value == null) {
             logger.logp(Level.INFO, className, "parseParam", "invalid contents: " + paramNode);

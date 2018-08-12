@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:annotation>
+    <xs:documentation xml:lang="en">
+      This schema defines the declaration of the echoMQTT configuration.
+    </xs:documentation>
+  </xs:annotation>
+
+  <xs:element name="rules" type="RulesType"/>
+  
+  <xs:complexType name="RulesType">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="publish" type="PublishType" />
+      <xs:element name="subscribe" type="SubscribeType" />
+    </xs:choice>
+  </xs:complexType>
+  
+  <xs:group name="ObjecGroup">
+    <xs:sequence>
+      <xs:element name="address" type="xs:string" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="eoj" type="EOJ" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="property" type="PropertyType" minOccurs="1" maxOccurs="unbounded"/>
+     </xs:sequence>
+  </xs:group>
+  
+  <xs:complexType name="PropertyType">
+    <xs:sequence>
+      <xs:element name="epc" type="xs:string"/>
+      <xs:element name="name" type="xs:string"/>
+      <xs:element name="converter" type="ConverterType"/>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="PublishType">
+    <xs:sequence>
+      <xs:group ref="ObjecGroup" />
+      <xs:element name="interval" type="INTERVAL" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="topic" type="TOPIC" minOccurs="1" maxOccurs="1"/>
+    </xs:sequence>
+    <xs:attribute name="get" type="ENABLE" default="enabled"/>
+    <xs:attribute name="notify" type="ENABLE" default="disabled"/>
+  </xs:complexType>
+  
+  <xs:complexType name="SubscribeType">
+    <xs:sequence>
+      <xs:group ref="ObjecGroup" />
+      <xs:element name="topic" type="TOPIC" minOccurs="1" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="ConverterType">
+    <xs:sequence>
+      <xs:element name="class" type="xs:string" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="param" type="ParamType" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="ParamType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="name" type="xs:string" use="required" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  
+  <xs:simpleType name="INTERVAL">
+    <xs:restriction base="xs:integer">
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <xs:simpleType name="TOPIC">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[\._0-9a-zA-Z]+(/[\._0-9a-zA-Z]+)*"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <xs:simpleType name="EOJ">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9a-fA-F]{6}"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <xs:simpleType name="ENABLE">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="enabled" />
+      <xs:enumeration value="disabled" />
+    </xs:restriction>
+  </xs:simpleType>
+  
+</xs:schema>
