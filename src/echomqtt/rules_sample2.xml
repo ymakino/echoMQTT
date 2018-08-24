@@ -21,6 +21,11 @@
         <param name="divide">10</param>
       </converter>
     </property>
+    <template>
+      <param name="place">tan-lab_upper</param>
+      <param name="place1">tan-lab</param>
+      <param name="place2">upper</param>
+    </template>
     <interval>10000</interval>
     <topic>devices/device1/event</topic>
   </publish>
@@ -45,6 +50,11 @@
         <param name="size">1</param>
       </converter>
     </property>
+    <template>
+      <param name="place">tan-lab_upper</param>
+      <param name="place1">tan-lab</param>
+      <param name="place2">upper</param>
+    </template>
     <interval>10000</interval>
     <topic>devices/device2/event</topic>
   </publish>
@@ -69,6 +79,11 @@
         <param name="divide">10</param>
       </converter>
     </property>
+    <template>
+      <param name="place">tan-lab_lower</param>
+      <param name="place1">tan-lab</param>
+      <param name="place2">lower</param>
+    </template>
     <interval>10000</interval>
     <topic>devices/device3/event</topic>
   </publish>
@@ -93,6 +108,11 @@
         <param name="size">1</param>
       </converter>
     </property>
+    <template>
+      <param name="place">tan-lab_lower</param>
+      <param name="place1">tan-lab</param>
+      <param name="place2">lower</param>
+    </template>
     <interval>10000</interval>
     <topic>devices/device4/event</topic>
   </publish>

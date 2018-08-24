@@ -139,6 +139,7 @@ public class Integer extends Converter {
         return result;
     }
     
+    @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
         

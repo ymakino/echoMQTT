@@ -124,6 +124,7 @@ public class RulesParser {
         
         String address = null;
         EOJ eoj = null;
+        HashMap<String, String> template = new HashMap<String, String>();
         LinkedList<PropertyRule> propertyRules = new LinkedList<PropertyRule>();
         int interval = -1;
         String topic = null;
@@ -165,6 +166,7 @@ public class RulesParser {
                     case "address": address = content; break;
                     case "eoj": eoj = new EOJ(content); break;
                     case "property": propertyRules.add(parseProperty(node)); break;
+                    case "template": template = parseTemplate(node); break;
                     case "interval": interval = Integer.parseInt(content); break;
                     case "topic": topic = content; break;
                     default:
@@ -187,7 +189,7 @@ public class RulesParser {
             return null;
         }
         
-        PublishRule result = new PublishRule(address, eoj, interval, topic, propertyRules, getEnabled, notifyEnabled);
+        PublishRule result = new PublishRule(address, eoj, interval, topic, propertyRules, template, getEnabled, notifyEnabled);
         logger.exiting(className, "parsePublish", result);
         return result;
     }
@@ -228,6 +230,30 @@ public class RulesParser {
         SubscribeRule result = new SubscribeRule(address, eoj, topic, propertyRules);
         logger.exiting(className, "parseSubscribe", result);
         return result;
+    }
+    
+    public HashMap<String, String> parseTemplate(Node templateNode) {
+        logger.entering(className, "parseTemplate", templateNode);
+        
+        HashMap<String, String> params = new HashMap<String, String>();
+        
+        NodeList nodeList = templateNode.getChildNodes();
+        
+        for (int i=0; i<nodeList.getLength(); i++) {
+            Node node = nodeList.item(i);
+            if (node.getNodeType() == Node.ELEMENT_NODE) {
+                switch (node.getNodeName()) {
+                    case "param": params.putAll(parseParam(node));break;
+                    default: 
+                        logger.logp(Level.INFO, className, "parseTemplate", "invalid node: " + node.getNodeName());
+                        logger.exiting(className, "parseTemplate", null);
+                        return null;
+                }
+            }
+        }
+        
+        logger.exiting(className, "parseTemplate", params);
+        return params;
     }
     
     public PropertyRule parseProperty(Node propertyNode) {

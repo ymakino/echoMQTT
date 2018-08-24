@@ -3,6 +3,7 @@ package echomqtt;
 import echowand.common.EOJ;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -16,15 +17,17 @@ public class PublishRule {
     private int interval;
     private String topic;
     private List<PropertyRule> propertyRules;
+    private HashMap<String, String> template;
     private boolean getEnabled;
     private boolean notifyEnabled;
     
-    public PublishRule(String address, EOJ eoj, int interval, String topic, Collection<PropertyRule> propertieRules, boolean getEnabled, boolean notifyEnabled) {
+    public PublishRule(String address, EOJ eoj, int interval, String topic, Collection<PropertyRule> propertieRules, HashMap<String, String> template, boolean getEnabled, boolean notifyEnabled) {
         this.address = address;
         this.eoj = eoj;
         this.interval = interval;
         this.topic = topic;
         this.propertyRules = new LinkedList<PropertyRule>(propertieRules);
+        this.template = template;
         this.getEnabled = getEnabled;
         this.notifyEnabled = notifyEnabled;
     }
@@ -57,6 +60,10 @@ public class PublishRule {
         return new ArrayList<PropertyRule>(propertyRules);
     }
     
+    public HashMap<String, String> getTemplate() {
+        return template;
+    }
+    
     public boolean isGetEnabled() {
         return getEnabled;
     }
@@ -74,6 +81,7 @@ public class PublishRule {
         builder.append("eoj: ").append(eoj).append(", ");
         builder.append("interval: ").append(interval).append(", ");
         builder.append("topic: ").append(topic).append(", ");
+        builder.append("template: ").append(template).append(", ");
         builder.append("get: ").append(getEnabled).append(", ");
         builder.append("notify: ").append(notifyEnabled).append(", ");
         

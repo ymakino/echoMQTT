@@ -16,7 +16,7 @@
     </xs:choice>
   </xs:complexType>
   
-  <xs:group name="ObjecGroup">
+  <xs:group name="ObjectGroup">
     <xs:sequence>
       <xs:element name="address" type="xs:string" minOccurs="1" maxOccurs="1"/>
       <xs:element name="eoj" type="EOJ" minOccurs="1" maxOccurs="1"/>
@@ -34,7 +34,8 @@
   
   <xs:complexType name="PublishType">
     <xs:sequence>
-      <xs:group ref="ObjecGroup" />
+      <xs:group ref="ObjectGroup" />
+      <xs:element name="template" type="TemplateType" minOccurs="0" maxOccurs="1"/>
       <xs:element name="interval" type="INTERVAL" minOccurs="0" maxOccurs="1"/>
       <xs:element name="topic" type="TOPIC" minOccurs="1" maxOccurs="1"/>
     </xs:sequence>
@@ -44,7 +45,7 @@
   
   <xs:complexType name="SubscribeType">
     <xs:sequence>
-      <xs:group ref="ObjecGroup" />
+      <xs:group ref="ObjectGroup" />
       <xs:element name="topic" type="TOPIC" minOccurs="1" maxOccurs="1"/>
     </xs:sequence>
   </xs:complexType>
@@ -62,6 +63,12 @@
         <xs:attribute name="name" type="xs:string" use="required" />
       </xs:extension>
     </xs:simpleContent>
+  </xs:complexType>
+  
+  <xs:complexType name="TemplateType">
+    <xs:sequence>
+      <xs:element name="param" type="ParamType" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
   </xs:complexType>
   
   <xs:simpleType name="INTERVAL">

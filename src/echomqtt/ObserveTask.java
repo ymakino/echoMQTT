@@ -4,6 +4,7 @@ import echomqtt.converter.ConverterException;
 import echomqtt.json.JObject;
 import echomqtt.json.JValue;
 import echomqtt.json.JsonEncoderException;
+import echowand.common.EOJ;
 import echowand.net.Node;
 import echowand.net.SubnetException;
 import echowand.service.Service;
@@ -55,12 +56,16 @@ public class ObserveTask {
         }
         
         observeResult = service.doObserve(new ObserveListener() {
+            
             @Override
             public void receive(ObserveResult result, ResultFrame resultFrame, ResultData resultData) {
                 logger.entering(className, "ObserveListener.receive", new Object[]{result, resultFrame, resultData});
                 
                 for (PublishRule publishRule: publishRules) {
+                    
+                    EOJ eoj = publishRule.getEOJ();
                     Node node;
+                    
                     try {
                         node = service.getSubnet().getRemoteNode(publishRule.getAddress());
                     } catch (SubnetException ex) {
@@ -73,6 +78,10 @@ public class ObserveTask {
                     }
                     
                     HashMap<String, JValue> jsonMap = new HashMap<String, JValue>();
+                    
+                    for (HashMap.Entry<String, String> entry: publishRule.getTemplate().entrySet()) {
+                        jsonMap.put(entry.getKey(), JValue.newString(entry.getValue()));
+                    }
                     
                     for (PropertyRule propertyRule: publishRule.getPropertyRules()) {
                         if (propertyRule.getEPC() == resultData.getEPC()) {
@@ -96,6 +105,14 @@ public class ObserveTask {
                         LocalDateTime localDateTime = LocalDateTime.now();
                         ZonedDateTime zonedDateTime = ZonedDateTime.of(localDateTime, ZoneId.systemDefault());
                         jsonMap.put("timestamp", JValue.newString(DateTimeFormatter.ISO_INSTANT.format(zonedDateTime)));
+                    }
+
+                    if (!jsonMap.keySet().contains("eoj")) {
+                        jsonMap.put("eoj", JValue.newString(eoj.toString()));
+                    }
+
+                    if (!jsonMap.keySet().contains("node")) {
+                        jsonMap.put("node", JValue.newString(node.toString()));
                     }
                         
                     try {

@@ -34,6 +34,8 @@ public class GetTask {
     private static final Logger logger = Logger.getLogger(GetTask.class.getName());
     private static final String className = GetTask.class.getName();
     
+    private static final int DEFAULT_TIMEOUT = 5000;
+    
     private Service service;
     private MQTTManager mqttManager;
     private PublishRule rule;
@@ -52,7 +54,7 @@ public class GetTask {
         this.mqttManager = mqttManager;
         this.rule = rule;
         
-        timeout = 5000;
+        timeout = DEFAULT_TIMEOUT;
         
         node = service.getRemoteNode(rule.getAddress());
         eoj = rule.getEOJ();
@@ -75,10 +77,9 @@ public class GetTask {
             logger.entering(className, "PublishTimerTask.doGet", new Object[]{service, mqttManager, rule});
         
             service.doGet(node, eoj, epcs, timeout, new GetListener() {
-                HashMap<String, JValue> jsonMap = new HashMap<String, JValue>();
-
-                private boolean generate(EPC epc, Data data) throws ConverterException {
-                    logger.entering(className, "PublishTimerTask.generate", new Object[]{epc, data});
+                
+                private boolean generate(HashMap<String, JValue> jsonMap, EPC epc, Data data) throws ConverterException {
+                    logger.entering(className, "PublishTimerTask.generate", new Object[]{jsonMap, epc, data});
                     
                     boolean result = false;
                     
@@ -100,21 +101,67 @@ public class GetTask {
                 public void receive(GetResult result, ResultFrame resultFrame) {
                     logger.entering(className, "PublishTimerTask.receive", new Object[]{result, resultFrame});
                     
+                    if (!resultFrame.getSender().equals(node)) {
+                        logger.logp(Level.WARNING, className, "PublishTimerTask.receive", "invalid sender: " + resultFrame.getSender() + " (" + rule + " -> " + resultFrame + ")");
+                        logger.exiting(className, "PublishTimerTask.publish");
+                        return;
+                    }
+                    
+                    HashMap<String, JValue> jsonMap = new HashMap<String, JValue>();
+                    
                     try {
                         List<ResultData> resultDataList = result.getDataList(resultFrame, true);
                         
                         for (ResultData resultData: resultDataList) {
-                            generate(resultData.getEPC(), resultData.getActualData());
+                            generate(jsonMap, resultData.getEPC(), resultData.getActualData());
                         }
 
-                        if (jsonMap.size() == rule.countPropertieRules()) {
-                            result.finish();
-                        }
+                        publish(jsonMap, resultFrame.getSender());
+                        
                     } catch (ConverterException ex) {
                         logger.logp(Level.INFO, className, "PublishTimerTask.receive", "catched exception", ex);
                     }
                     
                     logger.exiting(className, "PublishTimerTask.receive");
+                }
+                
+                public void publish(HashMap<String, JValue> jsonMap, Node node) {
+                    logger.entering(className, "PublishTimerTask.publish", new Object[]{jsonMap, node});
+                    
+                    if (jsonMap.size() != rule.countPropertieRules()) {
+                        logger.logp(Level.INFO, className, "PublishTimerTask.finish", "invalid data: " + node + " " + eoj + " " + epcs);
+                        logger.exiting(className, "PublishTimerTask.publish");
+                        return;
+                    }
+                    
+                    for (HashMap.Entry<String, String> entry: rule.getTemplate().entrySet()) {
+                        jsonMap.putIfAbsent(entry.getKey(), JValue.newString(entry.getValue()));
+                    }
+
+                    if (!jsonMap.keySet().contains("timestamp")) {
+                        LocalDateTime localDateTime = LocalDateTime.now();
+                        ZonedDateTime zonedDateTime = ZonedDateTime.of(localDateTime, ZoneId.systemDefault());
+                        jsonMap.put("timestamp", JValue.newString(DateTimeFormatter.ISO_INSTANT.format(zonedDateTime)));
+                    }
+
+                    if (!jsonMap.keySet().contains("eoj")) {
+                        jsonMap.put("eoj", JValue.newString(eoj.toString()));
+                    }
+
+                    if (!jsonMap.keySet().contains("node")) {
+                        jsonMap.put("node", JValue.newString(node.toString()));
+                    }
+                    
+                    try {
+                        JObject jobject = JValue.newObject(jsonMap);
+                        mqttManager.publish(rule, jobject);
+                    } catch (PublisherException ex) {
+                        logger.logp(Level.INFO, className, "PublishTimerTask.finish", "catched exception", ex);
+                    } catch (JsonEncoderException ex) {
+                        logger.logp(Level.INFO, className, "PublishTimerTask.finish", "catched exception", ex);
+                    }
+                    
+                    logger.exiting(className, "PublishTimerTask.publish");
                 }
 
                 @Override
@@ -129,28 +176,11 @@ public class GetTask {
                     
                     if (result.countFrames() == 0) {
                         logger.logp(Level.INFO, className, "PublishTimerTask.finish", "no response: " + node + " " + eoj + " " + epcs);
+                        logger.exiting(className, "PublishTimerTask.finish");
                         return;
                     }
                     
-                    if (jsonMap.size() != rule.countPropertieRules()) {
-                        logger.logp(Level.INFO, className, "PublishTimerTask.finish", "invalid data: " + node + " " + eoj + " " + epcs);
-                        return;
-                    }
-
-                    if (!jsonMap.keySet().contains("timestamp")) {
-                        LocalDateTime localDateTime = LocalDateTime.now();
-                        ZonedDateTime zonedDateTime = ZonedDateTime.of(localDateTime, ZoneId.systemDefault());
-                        jsonMap.put("timestamp", JValue.newString(DateTimeFormatter.ISO_INSTANT.format(zonedDateTime)));
-                    }
-                    
-                    try {
-                        JObject jobject = JValue.newObject(jsonMap);
-                        mqttManager.publish(rule, jobject);
-                    } catch (PublisherException ex) {
-                        logger.logp(Level.INFO, className, "PublishTimerTask.finish", "catched exception", ex);
-                    } catch (JsonEncoderException ex) {
-                        logger.logp(Level.INFO, className, "PublishTimerTask.finish", "catched exception", ex);
-                    }
+                    logger.exiting(className, "PublishTimerTask.finish");
                 }
             });
         }
