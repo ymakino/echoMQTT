@@ -200,7 +200,7 @@ public class EchoMQTT {
     }
     
     public static void showUsage(String name) {
-        System.out.println("Usage: " + name + " [ -i interface ] [ -b broker ] [ -c clientId ] [ -q publishQoS ] [ xmlfile... ]");
+        System.out.println("Usage: " + name + " [ -i interface ] [ -b broker ] [ -c clientId ] [ -q publishQoS ] xmlfile...");
     }
 
     /**
@@ -254,7 +254,7 @@ public class EchoMQTT {
         }
         
         if (ruleFiles.size() == 0) {
-            System.err.println("rule files are required");
+            System.err.println("XML file(s) are required");
             showUsage("EchoMQTT");
             System.exit(1);
         }
