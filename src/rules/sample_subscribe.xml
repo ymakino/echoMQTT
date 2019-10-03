@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rules>
+  <subscribe>
+    <!-- <node>192.168.2.100</node> -->
+    <!-- <eoj>05fd01</eoj> -->
+    <eoj>0290</eoj>
+    
+    <property>
+      <epc>80</epc>
+      <name>lighting</name>
+      <converter>
+        <class>Map</class>
+        <param name="mapping">{"ON":"30","OFF":"31"}</param>
+      </converter>
+    </property>
+    <topic>sample/all/029000/set</topic>
+  </subscribe>
+</rules>

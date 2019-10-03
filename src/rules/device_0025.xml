@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rules>
+  <publish get="enabled" notify="enabled">
+    <eoj>0025</eoj>
+    
+    <property><epc>80</epc><name>EPC_80</name></property>
+    <property><epc>E0</epc><name>EPC_E0</name></property>
+    <property><epc>E2</epc><name>EPC_E2</name></property>
+    <property><epc>F0</epc><name>EPC_F0</name></property>
+    <property><epc>F1</epc><name>EPC_F1</name></property>
+    <property><epc>F2</epc><name>EPC_F2</name></property>
+    <property><epc>F3</epc><name>EPC_F3</name></property>
+    
+    <property>
+      <epc>80</epc>
+      <name>operation_status</name>
+      <converter>
+        <class>Map</class>
+        <param name="mapping">{"30":"ON","31":"OFF"}</param>
+      </converter>
+    </property>
+    
+    <property>
+      <epc>E0</epc>
+      <name>cumulative_flowrate</name>
+      <converter>
+        <class>Integer</class>
+        <param name="size">4</param>
+        <param name="signed">false</param>
+      </converter>
+    </property>
+    
+    <property>
+      <epc>E2</epc>
+      <name>flowrate</name>
+      <converter>
+        <class>Integer</class>
+        <param name="size">4</param>
+        <param name="signed">false</param>
+      </converter>
+    </property>
+    
+    <property>
+      <epc>F0</epc>
+      <name>detection</name>
+      <converter>
+        <class>Map</class>
+        <param name="mapping">{"41":"Found","42":"NotFound"}</param>
+      </converter>
+    </property>
+    
+    <property>
+      <epc>F1</epc>
+      <name>detection_threshold_lower</name>
+      <converter>
+        <class>Integer</class>
+        <param name="size">4</param>
+        <param name="signed">false</param>
+      </converter>
+    </property>
+    
+    <property>
+      <epc>F2</epc>
+      <name>detection_threshold_upper</name>
+      <converter>
+        <class>Integer</class>
+        <param name="size">4</param>
+        <param name="signed">false</param>
+      </converter>
+    </property>
+    
+    <property>
+      <epc>F3</epc>
+      <name>cumulative_flowrate_extra</name>
+      <converter>
+        <class>Integer</class>
+        <param name="size">4</param>
+        <param name="signed">false</param>
+      </converter>
+    </property>
+    
+    <interval>30000</interval>
+    <delay>5000</delay>
+    <topic>devices/[NODE]/[EOJ]</topic>
+  </publish>
+</rules>

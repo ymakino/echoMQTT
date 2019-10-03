@@ -153,10 +153,9 @@ public class MQTTManager {
         return result;
     }
     
-    public void publish(PublishRule publishRule, JObject jobject) throws PublisherException, JsonEncoderException {
-        logger.entering(className, "publish", new Object[]{publishRule, jobject});
+    public void publish(String topic, JObject jobject) throws PublisherException, JsonEncoderException {
+        logger.entering(className, "publish", new Object[]{topic, jobject});
         
-        String topic = publishRule.getTopic();
         String payload = jobject.toJSON();
         
         logger.logp(Level.INFO, className, "publish", "Topic: " + topic + ", Payload: " + payload);

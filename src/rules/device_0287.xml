@@ -1,0 +1,1159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rules>
+  <publish get="enabled" notify="enabled">
+    <eoj>0287</eoj>
+    
+    <property><epc>80</epc><name>EPC_80</name></property>
+    <property><epc>C0</epc><name>EPC_C0</name></property>
+    <property><epc>C1</epc><name>EPC_C1</name></property>
+    <property><epc>C2</epc><name>EPC_C2</name></property>
+    <property><epc>C3</epc><name>EPC_C3</name></property>
+    <property><epc>C4</epc><name>EPC_C4</name></property>
+    <property><epc>C5</epc><name>EPC_C5</name></property>
+    <property><epc>C6</epc><name>EPC_C6</name></property>
+    <property><epc>C7</epc><name>EPC_C7</name></property>
+    <property><epc>C8</epc><name>EPC_C8</name></property>
+    
+    <property><epc>D0</epc><name>EPC_D0</name></property>
+    <property><epc>D1</epc><name>EPC_D1</name></property>
+    <property><epc>D2</epc><name>EPC_D2</name></property>
+    <property><epc>D3</epc><name>EPC_D3</name></property>
+    <property><epc>D4</epc><name>EPC_D4</name></property>
+    <property><epc>D5</epc><name>EPC_D5</name></property>
+    <property><epc>D6</epc><name>EPC_D6</name></property>
+    <property><epc>D7</epc><name>EPC_D7</name></property>
+    <property><epc>D8</epc><name>EPC_D8</name></property>
+    <property><epc>D9</epc><name>EPC_D9</name></property>
+    <property><epc>DA</epc><name>EPC_DA</name></property>
+    <property><epc>DB</epc><name>EPC_DB</name></property>
+    <property><epc>DC</epc><name>EPC_DC</name></property>
+    <property><epc>DD</epc><name>EPC_DD</name></property>
+    <property><epc>DE</epc><name>EPC_DE</name></property>
+    <property><epc>DF</epc><name>EPC_DF</name></property>
+    <property><epc>E0</epc><name>EPC_E0</name></property>
+    <property><epc>E1</epc><name>EPC_E1</name></property>
+    <property><epc>E2</epc><name>EPC_E2</name></property>
+    <property><epc>E3</epc><name>EPC_E3</name></property>
+    <property><epc>E4</epc><name>EPC_E4</name></property>
+    <property><epc>E5</epc><name>EPC_E5</name></property>
+    <property><epc>E6</epc><name>EPC_E6</name></property>
+    <property><epc>E7</epc><name>EPC_E7</name></property>
+    <property><epc>E8</epc><name>EPC_E8</name></property>
+    <property><epc>E9</epc><name>EPC_E9</name></property>
+    <property><epc>EA</epc><name>EPC_EA</name></property>
+    <property><epc>EB</epc><name>EPC_EB</name></property>
+    <property><epc>EC</epc><name>EPC_EC</name></property>
+    <property><epc>ED</epc><name>EPC_ED</name></property>
+    <property><epc>EE</epc><name>EPC_EE</name></property>
+    <property><epc>EF</epc><name>EPC_EF</name></property>
+    
+    <property>
+      <epc>80</epc>
+      <name>operation_status</name>
+      <converter>
+        <class>Map</class>
+        <param name="mapping">{"30":"ON","31":"OFF"}</param>
+      </converter>
+    </property>
+    
+    <property>
+      <epc>C0</epc>
+      <name>cumulative_electric_energy_consumption</name>
+      <converter>
+        <class>Integer</class>
+        <param name="size">4</param>
+        <param name="signed">false</param>
+      </converter>
+    </property>
+    
+    <property>
+      <epc>C1</epc>
+      <name>cumulative_electric_energy_consumption_reverse</name>
+      <converter>
+        <class>Integer</class>
+        <param name="size">4</param>
+        <param name="signed">false</param>
+      </converter>
+    </property>
+    
+    <property>
+      <epc>C2</epc>
+      <name>cumulative_electric_energy_consumption_unit</name>
+      <converter>
+        <class>Map</class>
+        <param name="mapping">{"00":"kWh","01":"0.1kWh","02":"0.01kWh","03":"0.001kWh","04":"0.0001kWh","0A":"10kWh","0B":"100kWh","0C":"1000kWh","0D":"10000kWh"}</param>
+      </converter>
+    </property>
+    
+    <property>
+      <epc>C3</epc>
+      <name>cumulative_electric_energy_consumption_log_day</name>
+      <segment offset="0" size="2">
+        <converter>
+          <class>Integer</class>
+          <param name="size">2</param>
+          <param name="signed">false</param>
+        </converter>
+      </segment>
+    </property>
+    
+    <property>
+      <epc>C3</epc>
+      <name>cumulative_electric_energy_consumption_log</name>
+      <segment offset="2">
+        <array min="48" max="48">
+          <converter>
+            <class>Integer</class>
+            <param name="size">4</param>
+            <param name="signed">false</param>
+          </converter>
+        </array>
+      </segment>
+    </property>
+    
+    <property>
+      <epc>C4</epc>
+      <name>cumulative_electric_energy_consumption_reverse_log_day</name>
+      <segment offset="0" size="2">
+        <converter>
+          <class>Integer</class>
+          <param name="size">2</param>
+          <param name="signed">false</param>
+        </converter>
+      </segment>
+    </property>
+    
+    <property>
+      <epc>C4</epc>
+      <name>cumulative_electric_energy_consumption_reverse_log</name>
+      <segment offset="2">
+        <array min="48" max="48">
+          <converter>
+            <class>Integer</class>
+            <param name="size">4</param>
+            <param name="signed">false</param>
+          </converter>
+        </array>
+      </segment>
+    </property>
+    
+    <property>
+      <epc>C5</epc>
+      <name>cumulative_electric_energy_consumption_log_date</name>
+      <converter>
+        <class>Integer</class>
+        <param name="size">1</param>
+        <param name="signed">false</param>
+      </converter>
+    </property>
+    
+    <property>
+      <epc>C6</epc>
+      <name>instantaneous_electric_energy_consumption</name>
+      <converter>
+        <class>Integer</class>
+        <param name="size">4</param>
+      </converter>
+    </property>
+    
+    <property>
+      <epc>C7</epc>
+      <name>instantaneous_current_r</name>
+      <segment offset="0">
+        <converter>
+          <class>Float</class>
+          <param name="size">2</param>
+          <param name="divide">10</param>
+        </converter>
+      </segment>
+    </property>
+    
+    <property>
+      <epc>C7</epc>
+      <name>instantaneous_current_t</name>
+      <segment offset="2">
+        <converter>
+          <class>Float</class>
+          <param name="size">2</param>
+          <param name="divide">10</param>
+        </converter>
+      </segment>
+    </property>
+    
+    <property>
+      <epc>C7</epc>
+      <name>instantaneous_current_r</name>
+      <segment offset="0" size="2">
+        <converter>
+          <class>Float</class>
+          <param name="size">2</param>
+          <param name="divide">10</param>
+        </converter>
+      </segment>
+    </property>
+    
+    <property>
+      <epc>C7</epc>
+      <name>instantaneous_current_t</name>
+      <segment offset="2" size="2">
+        <converter>
+          <class>Float</class>
+          <param name="size">2</param>
+          <param name="divide">10</param>
+        </converter>
+      </segment>
+    </property>
+    
+    <property>
+      <epc>C8</epc>
+      <name>instantaneous_voltage_rs</name>
+      <segment offset="0">
+        <converter>
+          <class>Float</class>
+          <param name="size">2</param>
+          <param name="divide">10</param>
+          <param name="signed">false</param>
+        </converter>
+      </segment>
+    </property>
+    
+    <property>
+      <epc>C8</epc>
+      <name>instantaneous_voltage_st</name>
+      <segment offset="2">
+        <converter>
+          <class>Float</class>
+          <param name="size">2</param>
+          <param name="divide">10</param>
+          <param name="signed">false</param>
+        </converter>
+      </segment>
+    </property>
+    
+    <property>
+      <epc>C8</epc>
+      <name>instantaneous_voltage_rs</name>
+      <segment offset="0" size="2">
+        <converter>
+          <class>Float</class>
+          <param name="size">2</param>
+          <param name="divide">10</param>
+          <param name="signed">false</param>
+        </converter>
+      </segment>
+    </property>
+    
+    <property>
+      <epc>C8</epc>
+      <name>instantaneous_voltage_st</name>
+      <segment offset="2" size="2">
+        <converter>
+          <class>Float</class>
+          <param name="size">2</param>
+          <param name="divide">10</param>
+          <param name="signed">false</param>
+        </converter>
+      </segment>
+    </property>
+    
+    <property>
+      <epc>D0</epc>
+      <name>channel_1</name>
+      <object>
+        <value name="cumulative_electric_energy_consumption">
+          <converter>
+            <class>Integer</class>
+            <param name="size">4</param>
+            <param name="signed">false</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_r">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_t">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+      </object>
+    </property>
+
+    <property>
+      <epc>D1</epc>
+      <name>channel_2</name>
+      <object>
+        <value name="cumulative_electric_energy_consumption">
+          <converter>
+            <class>Integer</class>
+            <param name="size">4</param>
+            <param name="signed">false</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_r">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_t">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+      </object>
+    </property>
+
+    <property>
+      <epc>D2</epc>
+      <name>channel_3</name>
+      <object>
+        <value name="cumulative_electric_energy_consumption">
+          <converter>
+            <class>Integer</class>
+            <param name="size">4</param>
+            <param name="signed">false</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_r">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_t">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+      </object>
+    </property>
+
+    <property>
+      <epc>D3</epc>
+      <name>channel_4</name>
+      <object>
+        <value name="cumulative_electric_energy_consumption">
+          <converter>
+            <class>Integer</class>
+            <param name="size">4</param>
+            <param name="signed">false</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_r">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_t">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+      </object>
+    </property>
+
+    <property>
+      <epc>D4</epc>
+      <name>channel_5</name>
+      <object>
+        <value name="cumulative_electric_energy_consumption">
+          <converter>
+            <class>Integer</class>
+            <param name="size">4</param>
+            <param name="signed">false</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_r">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_t">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+      </object>
+    </property>
+
+    <property>
+      <epc>D5</epc>
+      <name>channel_6</name>
+      <object>
+        <value name="cumulative_electric_energy_consumption">
+          <converter>
+            <class>Integer</class>
+            <param name="size">4</param>
+            <param name="signed">false</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_r">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_t">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+      </object>
+    </property>
+
+    <property>
+      <epc>D6</epc>
+      <name>channel_7</name>
+      <object>
+        <value name="cumulative_electric_energy_consumption">
+          <converter>
+            <class>Integer</class>
+            <param name="size">4</param>
+            <param name="signed">false</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_r">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_t">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+      </object>
+    </property>
+
+    <property>
+      <epc>D7</epc>
+      <name>channel_8</name>
+      <object>
+        <value name="cumulative_electric_energy_consumption">
+          <converter>
+            <class>Integer</class>
+            <param name="size">4</param>
+            <param name="signed">false</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_r">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_t">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+      </object>
+    </property>
+
+    <property>
+      <epc>D8</epc>
+      <name>channel_9</name>
+      <object>
+        <value name="cumulative_electric_energy_consumption">
+          <converter>
+            <class>Integer</class>
+            <param name="size">4</param>
+            <param name="signed">false</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_r">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_t">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+      </object>
+    </property>
+
+    <property>
+      <epc>D9</epc>
+      <name>channel_10</name>
+      <object>
+        <value name="cumulative_electric_energy_consumption">
+          <converter>
+            <class>Integer</class>
+            <param name="size">4</param>
+            <param name="signed">false</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_r">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_t">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+      </object>
+    </property>
+
+    <property>
+      <epc>DA</epc>
+      <name>channel_11</name>
+      <object>
+        <value name="cumulative_electric_energy_consumption">
+          <converter>
+            <class>Integer</class>
+            <param name="size">4</param>
+            <param name="signed">false</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_r">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_t">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+      </object>
+    </property>
+
+    <property>
+      <epc>DB</epc>
+      <name>channel_12</name>
+      <object>
+        <value name="cumulative_electric_energy_consumption">
+          <converter>
+            <class>Integer</class>
+            <param name="size">4</param>
+            <param name="signed">false</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_r">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_t">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+      </object>
+    </property>
+
+    <property>
+      <epc>DC</epc>
+      <name>channel_13</name>
+      <object>
+        <value name="cumulative_electric_energy_consumption">
+          <converter>
+            <class>Integer</class>
+            <param name="size">4</param>
+            <param name="signed">false</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_r">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_t">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+      </object>
+    </property>
+
+    <property>
+      <epc>DD</epc>
+      <name>channel_14</name>
+      <object>
+        <value name="cumulative_electric_energy_consumption">
+          <converter>
+            <class>Integer</class>
+            <param name="size">4</param>
+            <param name="signed">false</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_r">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_t">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+      </object>
+    </property>
+
+    <property>
+      <epc>DE</epc>
+      <name>channel_15</name>
+      <object>
+        <value name="cumulative_electric_energy_consumption">
+          <converter>
+            <class>Integer</class>
+            <param name="size">4</param>
+            <param name="signed">false</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_r">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_t">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+      </object>
+    </property>
+
+    <property>
+      <epc>DF</epc>
+      <name>channel_16</name>
+      <object>
+        <value name="cumulative_electric_energy_consumption">
+          <converter>
+            <class>Integer</class>
+            <param name="size">4</param>
+            <param name="signed">false</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_r">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_t">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+      </object>
+    </property>
+
+    <property>
+      <epc>E0</epc>
+      <name>channel_17</name>
+      <object>
+        <value name="cumulative_electric_energy_consumption">
+          <converter>
+            <class>Integer</class>
+            <param name="size">4</param>
+            <param name="signed">false</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_r">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_t">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+      </object>
+    </property>
+
+    <property>
+      <epc>E1</epc>
+      <name>channel_18</name>
+      <object>
+        <value name="cumulative_electric_energy_consumption">
+          <converter>
+            <class>Integer</class>
+            <param name="size">4</param>
+            <param name="signed">false</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_r">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_t">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+      </object>
+    </property>
+
+    <property>
+      <epc>E2</epc>
+      <name>channel_19</name>
+      <object>
+        <value name="cumulative_electric_energy_consumption">
+          <converter>
+            <class>Integer</class>
+            <param name="size">4</param>
+            <param name="signed">false</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_r">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_t">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+      </object>
+    </property>
+
+    <property>
+      <epc>E3</epc>
+      <name>channel_20</name>
+      <object>
+        <value name="cumulative_electric_energy_consumption">
+          <converter>
+            <class>Integer</class>
+            <param name="size">4</param>
+            <param name="signed">false</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_r">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_t">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+      </object>
+    </property>
+
+    <property>
+      <epc>E4</epc>
+      <name>channel_21</name>
+      <object>
+        <value name="cumulative_electric_energy_consumption">
+          <converter>
+            <class>Integer</class>
+            <param name="size">4</param>
+            <param name="signed">false</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_r">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_t">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+      </object>
+    </property>
+
+    <property>
+      <epc>E5</epc>
+      <name>channel_22</name>
+      <object>
+        <value name="cumulative_electric_energy_consumption">
+          <converter>
+            <class>Integer</class>
+            <param name="size">4</param>
+            <param name="signed">false</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_r">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_t">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+      </object>
+    </property>
+
+    <property>
+      <epc>E6</epc>
+      <name>channel_23</name>
+      <object>
+        <value name="cumulative_electric_energy_consumption">
+          <converter>
+            <class>Integer</class>
+            <param name="size">4</param>
+            <param name="signed">false</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_r">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_t">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+      </object>
+    </property>
+
+    <property>
+      <epc>E7</epc>
+      <name>channel_24</name>
+      <object>
+        <value name="cumulative_electric_energy_consumption">
+          <converter>
+            <class>Integer</class>
+            <param name="size">4</param>
+            <param name="signed">false</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_r">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_t">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+      </object>
+    </property>
+
+    <property>
+      <epc>E8</epc>
+      <name>channel_25</name>
+      <object>
+        <value name="cumulative_electric_energy_consumption">
+          <converter>
+            <class>Integer</class>
+            <param name="size">4</param>
+            <param name="signed">false</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_r">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_t">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+      </object>
+    </property>
+
+    <property>
+      <epc>E9</epc>
+      <name>channel_26</name>
+      <object>
+        <value name="cumulative_electric_energy_consumption">
+          <converter>
+            <class>Integer</class>
+            <param name="size">4</param>
+            <param name="signed">false</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_r">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_t">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+      </object>
+    </property>
+
+    <property>
+      <epc>EA</epc>
+      <name>channel_27</name>
+      <object>
+        <value name="cumulative_electric_energy_consumption">
+          <converter>
+            <class>Integer</class>
+            <param name="size">4</param>
+            <param name="signed">false</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_r">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_t">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+      </object>
+    </property>
+
+    <property>
+      <epc>EB</epc>
+      <name>channel_28</name>
+      <object>
+        <value name="cumulative_electric_energy_consumption">
+          <converter>
+            <class>Integer</class>
+            <param name="size">4</param>
+            <param name="signed">false</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_r">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_t">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+      </object>
+    </property>
+
+    <property>
+      <epc>EC</epc>
+      <name>channel_29</name>
+      <object>
+        <value name="cumulative_electric_energy_consumption">
+          <converter>
+            <class>Integer</class>
+            <param name="size">4</param>
+            <param name="signed">false</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_r">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_t">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+      </object>
+    </property>
+
+    <property>
+      <epc>ED</epc>
+      <name>channel_30</name>
+      <object>
+        <value name="cumulative_electric_energy_consumption">
+          <converter>
+            <class>Integer</class>
+            <param name="size">4</param>
+            <param name="signed">false</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_r">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_t">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+      </object>
+    </property>
+
+    <property>
+      <epc>EE</epc>
+      <name>channel_31</name>
+      <object>
+        <value name="cumulative_electric_energy_consumption">
+          <converter>
+            <class>Integer</class>
+            <param name="size">4</param>
+            <param name="signed">false</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_r">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_t">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+      </object>
+    </property>
+
+    <property>
+      <epc>EF</epc>
+      <name>channel_32</name>
+      <object>
+        <value name="cumulative_electric_energy_consumption">
+          <converter>
+            <class>Integer</class>
+            <param name="size">4</param>
+            <param name="signed">false</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_r">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+        <value name="instantaneous_current_t">
+          <converter>
+            <class>Float</class>
+            <param name="size">2</param>
+            <param name="divide">10</param>
+          </converter>
+        </value>
+      </object>
+    </property>
+    
+    <interval>30000</interval>
+    <delay>6500</delay>
+    <topic>devices/[NODE]/[EOJ]</topic>
+  </publish>
+</rules>

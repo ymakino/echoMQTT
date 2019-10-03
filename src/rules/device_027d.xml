@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rules>
+  <publish get="enabled" notify="enabled">
+    <eoj>027d</eoj>
+    
+    <property><epc>80</epc><name>EPC_80</name></property>
+    <property><epc>83</epc><name>EPC_83</name></property>
+    <property><epc>D0</epc><name>EPC_D0</name></property>
+    <property><epc>D7</epc><name>EPC_D7</name></property>
+    <property><epc>D9</epc><name>EPC_D9</name></property>
+    
+    <property><epc>EB</epc><name>EPC_EB</name></property>
+    <property><epc>D8</epc><name>EPC_D8</name></property>
+    <property><epc>D6</epc><name>EPC_D6</name></property>
+    <property><epc>EC</epc><name>EPC_EC</name></property>
+    <property><epc>FA</epc><name>EPC_FA</name></property>
+    <property><epc>F2</epc><name>EPC_F2</name></property>
+    <property><epc>F9</epc><name>EPC_F9</name></property>
+    <property><epc>FF</epc><name>EPC_FF</name></property>
+    <property><epc>D4</epc><name>EPC_D4</name></property>
+    <property><epc>D3</epc><name>EPC_D3</name></property>
+    <property><epc>D5</epc><name>EPC_D5</name></property>
+    <property><epc>DA</epc><name>EPC_DA</name></property>
+    <property><epc>F1</epc><name>EPC_F1</name></property>
+    <property><epc>F0</epc><name>EPC_F0</name></property>
+    <property><epc>D1</epc><name>EPC_D1</name></property>
+    <property><epc>D0</epc><name>EPC_D0</name></property>
+    <property><epc>D2</epc><name>EPC_D2</name></property>
+    <property><epc>E4</epc><name>EPC_E4</name></property>
+    <property><epc>E6</epc><name>EPC_E6</name></property>
+    
+    <property>
+      <epc>80</epc>
+      <name>operation_status</name>
+      <converter>
+        <class>Map</class>
+        <param name="mapping">{"30":"ON","31":"OFF"}</param>
+      </converter>
+    </property>
+    
+    <property>
+      <epc>EB</epc>
+      <name>charging_power</name>
+      <converter>
+        <class>Integer</class>
+        <param name="size">4</param>
+        <param name="signed">false</param>
+      </converter>
+    </property>
+      
+    <property>
+      <epc>D8</epc>
+      <name>cumulative_charging_energy</name>
+      <converter>
+        <class>Integer</class>
+        <param name="size">4</param>
+        <param name="signed">false</param>
+      </converter>
+    </property>
+      
+    <property>
+      <epc>D6</epc>
+      <name>cumulative_discharging_energy</name>
+      <converter>
+        <class>Integer</class>
+        <param name="size">4</param>
+        <param name="signed">false</param>
+      </converter>
+    </property>
+    
+    <property>
+      <epc>EC</epc>
+      <name>discharging_power</name>
+      <converter>
+        <class>Integer</class>
+        <param name="size">4</param>
+        <param name="signed">false</param>
+      </converter>
+    </property>
+    
+    <property>
+      <epc>FA</epc>
+      <name>alternating_current</name>
+      <converter>
+        <class>Float</class>
+        <param name="size">2</param>
+        <param name="divide">10</param>
+        <param name="signed">false</param>
+      </converter>
+    </property>
+    
+    <property>
+      <epc>F2</epc>
+      <name>effective_power</name>
+      <converter>
+        <class>Float</class>
+        <param name="size">2</param>
+        <param name="divide">10</param>
+      </converter>
+    </property>
+    
+    <property>
+      <epc>F9</epc>
+      <name>alternating_voltage</name>
+      <converter>
+        <class>Integer</class>
+        <param name="size">2</param>
+        <param name="signed">false</param>
+      </converter>
+    </property>
+    
+    <property>
+      <epc>FF</epc>
+      <name>health_check</name>
+      <converter>
+        <class>Map</class>
+        <param name="mapping">{"30":"ON","31":"OFF"}</param>
+      </converter>
+    </property>
+      
+    <property>
+      <epc>D4</epc>
+      <name>instantaneous_charging_discharging_current</name>
+      <converter>
+        <class>Float</class>
+        <param name="size">2</param>
+        <param name="divide">10</param>
+      </converter>
+    </property>
+      
+    <property>
+      <epc>D3</epc>
+      <name>instantaneous_charging_discharging_power</name>
+      <converter>
+        <class>Integer</class>
+        <param name="size">4</param>
+      </converter>
+    </property>
+      
+    <property>
+      <epc>D5</epc>
+      <name>instantaneous_charging_discharging_voltage</name>
+      <converter>
+        <class>Integer</class>
+        <param name="size">2</param>
+        <param name="signed">false</param>
+      </converter>
+    </property>
+    
+    <property>
+      <epc>DA</epc>
+      <name>operation_mode</name>
+      <converter>
+        <class>Map</class>
+        <param name="mapping">{"41":"FastCharging","42":"Charging","43":"Discharging","44":"Standby","45":"Test","46":"Automatic","48":"Restart","49":"Recalculation","40":"Other"}</param>
+      </converter>
+    </property>
+    
+    <property>
+      <epc>F1</epc>
+      <name>power_conditioner_operation_mode</name>
+    </property>
+    
+    <property>
+      <epc>F0</epc>
+      <name>power_conditioner_operation_status</name>
+    </property>
+    
+    <property>
+      <epc>D1</epc>
+      <name>rated_capacity</name>
+      <converter>
+        <class>Float</class>
+        <param name="size">2</param>
+        <param name="divide">10</param>
+        <param name="signed">false</param>
+      </converter>
+    </property>
+    
+    <property>
+      <epc>D0</epc>
+      <name>rated_energy</name>
+      <converter>
+        <class>Integer</class>
+        <param name="size">4</param>
+        <param name="signed">false</param>
+      </converter>
+    </property>
+    
+    <property>
+      <epc>D2</epc>
+      <name>rated_voltage</name>
+      <converter>
+        <class>Integer</class>
+        <param name="size">2</param>
+        <param name="signed">false</param>
+      </converter>
+    </property>
+    
+    <property>
+      <epc>E4</epc>
+      <name>remaining_capacity_rate</name>
+      <converter>
+        <class>Integer</class>
+        <param name="size">1</param>
+        <param name="signed">false</param>
+      </converter>
+    </property>
+    
+    <property>
+      <epc>E6</epc>
+      <name>battery_type</name>
+      <converter>
+        <class>Integer</class>
+        <param name="size">1</param>
+        <param name="signed">false</param>
+      </converter>
+    </property>
+    
+    <interval>30000</interval>
+    <delay>6000</delay>
+    <topic>devices/[NODE]/[EOJ]</topic>
+  </publish>
+</rules>

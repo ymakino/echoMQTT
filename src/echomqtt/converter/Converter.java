@@ -12,6 +12,24 @@ public class Converter {
     private static final Logger logger = Logger.getLogger(Converter.class.getName());
     private static final String className = Converter.class.getName();
     
+    public int getSize() {
+        return -1;
+    }
+    
+    public Data pack(Data data) {
+        if (getSize() < 0 || data.size() <= getSize()) {
+            return data;
+        }
+        
+        byte[] bytes = new byte[getSize()];
+
+        for (int i=0; i<getSize(); i++) {
+            bytes[i] = data.get(i);
+        }
+
+        return new Data(bytes);
+    }
+    
     public JValue convert(Data data) throws ConverterException {
         logger.entering(className, "convert", data);
         

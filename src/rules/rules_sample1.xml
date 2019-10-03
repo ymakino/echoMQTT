@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rules>
   <publish>
-    <address>150.65.230.104</address>
+    <node>150.65.230.104</node>
     <eoj>001101</eoj>
     <property>
       <epc>E0</epc>
@@ -16,7 +16,7 @@
     <topic>devices/device1/event</topic>
   </publish>
   <publish>
-    <address>150.65.230.104</address>
+    <node>150.65.230.104</node>
     <eoj>001201</eoj>
     <property>
       <epc>E0</epc>
@@ -31,7 +31,7 @@
     <topic>devices/device2/event</topic>
   </publish>
   <publish>
-    <address>150.65.231.30</address>
+    <node>150.65.231.30</node>
     <eoj>002d01</eoj>
     <property>
       <epc>E0</epc>
@@ -46,7 +46,7 @@
     <topic>devices/device5/event</topic>
   </publish>
   <publish>
-    <address>150.65.231.35</address>
+    <node>150.65.231.35</node>
     <eoj>001b01</eoj>
     <property>
       <epc>E0</epc>
@@ -70,7 +70,7 @@
     <topic>devices/device8/event</topic>
   </publish>
   <publish>
-    <address>150.65.231.35</address>
+    <node>150.65.231.35</node>
     <eoj>001d01</eoj>
     <property>
       <epc>E0</epc>
@@ -86,7 +86,7 @@
   </publish>
 
   <subscribe>
-    <address>150.65.231.21</address>
+    <node>150.65.231.21</node>
     <eoj>05fd01</eoj>
     <property>
       <epc>80</epc>

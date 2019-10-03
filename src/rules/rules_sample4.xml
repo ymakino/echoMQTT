@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rules>
+  <publish>
+    <eoj>0011</eoj>
+    <property>
+      <epc>80</epc>
+      <name>status</name>
+      <converter>
+        <class>Map</class>
+        <param name="mapping">{"30":"ON","31":"OFF"}</param>
+      </converter>
+    </property>
+    <property>
+      <epc>E0</epc>
+      <name>temperature1</name>
+    </property>
+    <property>
+      <epc>E0</epc>
+      <name>temperature</name>
+      <converter>
+        <class>Float</class>
+        <param name="size">2</param>
+        <param name="divide">10</param>
+      </converter>
+    </property>
+    <interval>30000</interval>
+    <topic>devices/[NODE]/[EOJ]</topic>
+    <!--
+    <topic node="192.168.2.100" instance="1">devices/192.168.2.100/event</topic>
+    <topic node="192.168.2.101" instance="1">devices/192.168.2.101/event</topic>
+    <topic node="192.168.2.102" instance="1">devices/192.168.2.102/event</topic>
+    <topic node="192.168.2.103" instance="1">devices/192.168.2.103/event</topic>
+    <topic node="192.168.2.104" instance="1">devices/192.168.2.104/event</topic>
+    <topic node="192.168.2.105" instance="1">devices/192.168.2.105/event</topic>
+    <topic node="192.168.2.106" instance="1">devices/192.168.2.106/event</topic>
+    <topic node="192.168.2.107" instance="1">devices/192.168.2.107/event</topic>
+    <topic node="192.168.2.108" instance="1">devices/192.168.2.108/event</topic>
+    <topic node="192.168.2.109" instance="1">devices/192.168.2.100/event</topic>
+    <topic node="192.168.2.110" instance="1">devices/192.168.2.110/event</topic>
+    -->
+  </publish>
+  <publish>
+    <eoj>0012</eoj>
+    <property>
+      <epc>80</epc>
+      <name>status</name>
+      <converter>
+        <class>Map</class>
+        <param name="mapping">{"30":"ON","31":"OFF"}</param>
+      </converter>
+    </property>
+    <property>
+      <epc>E0</epc>
+      <name>humidity</name>
+      <converter>
+        <class>Integer</class>
+        <param name="signed">false</param>
+        <param name="size">1</param>
+      </converter>
+    </property>
+    <interval>30000</interval>
+    <delay>1000</delay>
+    <topic>devices/[NODE]/[EOJ]</topic>
+    <!--
+    <topic node="192.168.2.100" instance="1">devices/192.168.2.100/event</topic>
+    <topic node="192.168.2.101" instance="1">devices/192.168.2.101/event</topic>
+    <topic node="192.168.2.102" instance="1">devices/192.168.2.102/event</topic>
+    <topic node="192.168.2.103" instance="1">devices/192.168.2.103/event</topic>
+    <topic node="192.168.2.104" instance="1">devices/192.168.2.104/event</topic>
+    <topic node="192.168.2.105" instance="1">devices/192.168.2.105/event</topic>
+    <topic node="192.168.2.106" instance="1">devices/192.168.2.106/event</topic>
+    <topic node="192.168.2.107" instance="1">devices/192.168.2.107/event</topic>
+    <topic node="192.168.2.108" instance="1">devices/192.168.2.108/event</topic>
+    <topic node="192.168.2.109" instance="1">devices/192.168.2.100/event</topic>
+    <topic node="192.168.2.110" instance="1">devices/192.168.2.110/event</topic>
+    -->
+  </publish>
+  <publish>
+    <eoj>000d</eoj>
+    <property>
+      <epc>80</epc>
+      <name>status</name>
+      <converter>
+        <class>Map</class>
+        <param name="mapping">{"30":"ON","31":"OFF"}</param>
+      </converter>
+    </property>
+    <property>
+      <epc>E0</epc>
+      <name>illuminance</name>
+      <converter>
+        <class>Integer</class>
+        <param name="signed">false</param>
+        <param name="size">2</param>
+      </converter>
+    </property>
+    <property>
+      <epc>E1</epc>
+      <name>illuminanceK</name>
+      <converter>
+        <class>Integer</class>
+        <param name="signed">false</param>
+        <param name="size">2</param>
+      </converter>
+    </property>
+    <property>
+      <epc>F1</epc>
+      <name>illuminance2</name>
+      <converter>
+        <class>Integer</class>
+        <param name="signed">false</param>
+        <param name="size">2</param>
+      </converter>
+    </property>
+    <property>
+      <epc>F2</epc>
+      <name>sunshine</name>
+      <converter>
+        <class>Integer</class>
+        <param name="signed">false</param>
+        <param name="size">2</param>
+      </converter>
+    </property>
+    <interval>30000</interval>
+    <delay>2000</delay>
+    <topic>devices/[NODE]/[EOJ]</topic>
+    <!--
+    <topic node="192.168.2.100" instance="1">devices/192.168.2.100/event</topic>
+    <topic node="192.168.2.101" instance="1">devices/192.168.2.101/event</topic>
+    <topic node="192.168.2.102" instance="1">devices/192.168.2.102/event</topic>
+    <topic node="192.168.2.103" instance="1">devices/192.168.2.103/event</topic>
+    <topic node="192.168.2.104" instance="1">devices/192.168.2.104/event</topic>
+    <topic node="192.168.2.105" instance="1">devices/192.168.2.105/event</topic>
+    <topic node="192.168.2.106" instance="1">devices/192.168.2.106/event</topic>
+    <topic node="192.168.2.107" instance="1">devices/192.168.2.107/event</topic>
+    <topic node="192.168.2.108" instance="1">devices/192.168.2.108/event</topic>
+    <topic node="192.168.2.109" instance="1">devices/192.168.2.100/event</topic>
+    <topic node="192.168.2.110" instance="1">devices/192.168.2.110/event</topic
+    -->
+  -->
+  </publish>
+  <publish get="enabled" notify="enabled">
+    <eoj>0007</eoj>
+    <property>
+      <epc>B1</epc>
+      <name>motion</name>
+      <converter>
+        <class>Map</class>
+        <param name="mapping">{"41":"Found","42":"NotFound"}</param>
+      </converter>
+    </property>
+    <interval>30000</interval>
+    <delay>3000</delay>
+    <topic>devices/[NODE]/[EOJ]</topic>
+  </publish>
+  <publish get="enabled" notify="enabled">
+    <eoj>0008</eoj>
+    <property>
+      <epc>B1</epc>
+      <name>visitor</name>
+      <converter>
+        <class>Map</class>
+        <param name="mapping">{"41":"Found","42":"NotFound"}</param>
+      </converter>
+    </property>
+    <interval>30000</interval>
+    <delay>4000</delay>
+    <topic>devices/[NODE]/[EOJ]</topic>
+  </publish>
+  <publish get="enabled" notify="enabled">
+    <eoj>0013</eoj>
+    <property>
+      <epc>B1</epc>
+      <name>rain</name>
+      <converter>
+        <class>Map</class>
+        <param name="mapping">{"41":"Found","42":"NotFound"}</param>
+      </converter>
+    </property>
+    <interval>30000</interval>
+    <delay>5000</delay>
+    <topic>devices/[NODE]/[EOJ]</topic>
+  </publish>
+  
+  <publish get="enabled" notify="enabled">
+    <eoj>0019</eoj>
+    <property>
+      <epc>B1</epc>
+      <name>fire</name>
+      <converter>
+        <class>Map</class>
+        <param name="mapping">{"41":"Found","42":"NotFound"}</param>
+      </converter>
+    </property>
+    <interval>30000</interval>
+    <delay>3000</delay>
+    <topic>devices/[NODE]/[EOJ]</topic>
+  </publish>
+  <publish>
+    <eoj>001f</eoj>
+    <property>
+      <epc>E0</epc>
+      <name>wind</name>
+      <converter>
+        <class>Float</class>
+        <param name="size">2</param>
+        <param name="divide">100</param>
+      </converter>
+    </property>
+    <property>
+      <epc>F1</epc>
+      <name>vwind</name>
+      <converter>
+        <class>Integer</class>
+        <param name="signed">false</param>
+        <param name="size">2</param>
+      </converter>
+    </property>
+    <property>
+      <epc>F0</epc>
+      <name>hwind</name>
+      <converter>
+        <class>Integer</class>
+        <param name="signed">false</param>
+        <param name="size">2</param>
+      </converter>
+    </property>
+    <interval>30000</interval>
+    <delay>6000</delay>
+    <topic>devices/[NODE]/[EOJ]</topic>
+  </publish>
+  <publish>
+    <eoj>0022</eoj>
+    <property>
+      <epc>80</epc>
+      <name>status</name>
+      <converter>
+        <class>Map</class>
+        <param name="mapping">{"30":"ON","31":"OFF"}</param>
+      </converter>
+    </property>
+    <property>
+      <epc>E0</epc>
+      <name>CumulatedPower</name>
+      <converter>
+        <class>Integer</class>
+        <param name="size">4</param>
+        <param name="signed">true</param>
+      </converter>
+    </property>
+    <property>
+      <epc>E2</epc>
+      <name>SmallSensorInstantPower</name>
+      <converter>
+        <class>Float</class>
+        <param name="size">2</param>
+        <param name="divide">10</param>
+      </converter>
+    </property>
+    <property>
+      <epc>E3</epc>
+      <name>LargeSensorInstantPower</name>
+      <converter>
+        <class>Float</class>
+        <param name="size">2</param>
+        <param name="divide">10</param>
+      </converter>
+    </property>
+    <property>
+      <epc>E5</epc>
+      <name>EffectiveVoltage</name>
+      <converter>
+        <class>Integer</class>
+        <param name="size">2</param>
+        <param name="signed">true</param>
+      </converter>
+    </property>
+    <interval>30000</interval>
+    <delay>7000</delay>
+    <topic>devices/[NODE]/[EOJ]</topic>
+  </publish>
+  
+  <publish get="enabled" notify="enabled">
+    <eoj>0290</eoj>
+    <property>
+      <epc>80</epc>
+      <name>status</name>
+      <converter>
+        <class>Map</class>
+        <param name="mapping">{"30":"ON","31":"OFF"}</param>
+      </converter>
+    </property>
+    <property>
+      <epc>B0</epc>
+      <name>IlluminancePercentage</name>
+      <converter>
+        <class>Integer</class>
+        <param name="size">1</param>
+        <param name="signed">true</param>
+      </converter>
+    </property>
+    <interval>30000</interval>
+    <delay>8000</delay>
+    <topic>devices/[NODE]/[EOJ]</topic>
+  </publish>
+</rules>

@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rules>
+  <publish get="enabled" notify="enabled">
+    <eoj>0130</eoj>
+    
+    <property><epc>80</epc><name>EPC_80</name></property>
+    <property><epc>B0</epc><name>EPC_B0</name></property>
+    <property><epc>B3</epc><name>EPC_B3</name></property>
+    <property><epc>B4</epc><name>EPC_B4</name></property>
+    <property><epc>BA</epc><name>EPC_BA</name></property>
+    <property><epc>BB</epc><name>EPC_BB</name></property>
+    <property><epc>A0</epc><name>EPC_A0</name></property>
+    <property><epc>A3</epc><name>EPC_A3</name></property>
+    <property><epc>C6</epc><name>EPC_C6</name></property>
+    <property><epc>B9</epc><name>EPC_B9</name></property>
+    <property><epc>90</epc><name>EPC_90</name></property>
+    <property><epc>91</epc><name>EPC_91</name></property>
+    <property><epc>94</epc><name>EPC_94</name></property>
+    <property><epc>95</epc><name>EPC_95</name></property>
+    <property><epc>BE</epc><name>EPC_BE</name></property>
+    <property><epc>C0</epc><name>EPC_C0</name></property>
+    
+    <property>
+      <epc>80</epc>
+      <name>operation_status</name>
+      <converter>
+        <class>Map</class>
+        <param name="mapping">{"30":"ON","31":"OFF"}</param>
+      </converter>
+    </property>
+    
+    <property>
+      <epc>B0</epc>
+      <name>operation_mode</name>
+      <converter>
+        <class>Map</class>
+        <param name="mapping">{"41":"Automatic","42":"AirConditioning","43":"Heating","44":"Dehumidify","45":"Ventilate","40":"Other"}</param>
+      </converter>
+    </property>
+    
+    <property>
+      <epc>B3</epc>
+      <name>desired_temperature</name>
+      <converter>
+        <class>Integer</class>
+        <param name="size">1</param>
+        <param name="signed">true</param>
+      </converter>
+    </property>
+    
+    <property>
+      <epc>B4</epc>
+      <name>desired_relative_humidity</name>
+      <converter>
+        <class>Integer</class>
+        <param name="size">1</param>
+        <param name="signed">true</param>
+      </converter>
+    </property>
+    
+    <property>
+      <epc>BA</epc>
+      <name>room_relative_humidity</name>
+      <converter>
+        <class>Integer</class>
+        <param name="size">1</param>
+        <param name="signed">true</param>
+      </converter>
+    </property>
+    
+    <property>
+      <epc>BB</epc>
+      <name>room_temperature</name>
+      <converter>
+        <class>Integer</class>
+        <param name="size">1</param>
+        <param name="signed">true</param>
+      </converter>
+    </property>
+    
+    <property>
+      <epc>A0</epc>
+      <name>airflow_valume</name>
+      <converter>
+        <class>Map</class>
+        <param name="mapping">{"31":1,"32":2,"33":3,"34":4,"35":5,"36":6,"37":7,"38":8,"41":"AUTO"}</param>
+      </converter>
+    </property>
+    
+    <property>
+      <epc>A3</epc>
+      <name>airflow_swing</name>
+      <converter>
+        <class>Map</class>
+        <param name="mapping">{"31":"Off","41":"Vertical","42":"Horizontal","43":"VerticalAndHorizontal"}</param>
+      </converter>
+    </property>
+    
+    <property>
+      <epc>B9</epc>
+      <name>current</name>
+      <converter>
+        <class>Float</class>
+        <param name="size">2</param>
+        <param name="divide">10</param>
+        <param name="signed">false</param>
+      </converter>
+    </property>
+    
+    <property>
+      <epc>90</epc>
+      <name>on_timer_mode</name>
+      <converter>
+        <class>Map</class>
+        <param name="mapping">{"41":"On","42":"Off","43":"OnTimePoint","44":"OnInterval"}</param>
+      </converter>
+    </property>
+    
+    <property>
+      <epc>91</epc>
+      <name>on_time_point</name>
+      <array min="2" max="2">
+        <converter>
+          <class>Integer</class>
+          <param name="size">1</param>
+          <param name="signed">false</param>
+        </converter>
+      </array>
+    </property>
+    
+    <property>
+      <epc>92</epc>
+      <name>on_interval</name>
+      <array min="2" max="2">
+        <converter>
+          <class>Integer</class>
+          <param name="size">1</param>
+          <param name="signed">false</param>
+        </converter>
+      </array>
+    </property>
+    
+    <property>
+      <epc>94</epc>
+      <name>off_timer_mode</name>
+      <converter>
+        <class>Map</class>
+        <param name="mapping">{"41":"On","42":"Off","43":"OnTimePoint","44":"OnInterval"}</param>
+      </converter>
+    </property>
+    
+    <property>
+      <epc>95</epc>
+      <name>off_time_point</name>
+      <array min="2" max="2">
+        <converter>
+          <class>Integer</class>
+          <param name="size">1</param>
+          <param name="signed">false</param>
+        </converter>
+      </array>
+    </property>
+    
+    <property>
+      <epc>96</epc>
+      <name>off_interval</name>
+      <array min="2" max="2">
+        <converter>
+          <class>Integer</class>
+          <param name="size">1</param>
+          <param name="signed">false</param>
+        </converter>
+      </array>
+    </property>
+    
+    <property>
+      <epc>BB</epc>
+      <name>outdoor_temperature</name>
+      <converter>
+        <class>Integer</class>
+        <param name="size">1</param>
+        <param name="signed">true</param>
+      </converter>
+    </property>
+    
+    <property>
+      <epc>C0</epc>
+      <name>ventilation</name>
+      <converter>
+        <class>Map</class>
+        <param name="mapping">{"41":"OnExhaust","42":"Off","43":"OnSupply","44":"OnExhaustAndSupply"}</param>
+      </converter>
+    </property>
+    
+    <interval>30000</interval>
+    <delay>5500</delay>
+    <topic>devices/[NODE]/[EOJ]</topic>
+  </publish>
+</rules>

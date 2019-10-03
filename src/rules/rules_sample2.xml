@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rules>
   <publish>
-    <address>150.65.230.104</address>
+    <node>150.65.230.104</node>
     <eoj>001101</eoj>
     <property>
       <epc>E0</epc>
@@ -21,16 +21,16 @@
         <param name="divide">10</param>
       </converter>
     </property>
-    <template>
-      <param name="place">tan-lab_upper</param>
-      <param name="place1">tan-lab</param>
-      <param name="place2">upper</param>
-    </template>
+    <addition>
+      <param name="place">"tan-lab_upper"</param>
+      <param name="place1">"tan-lab"</param>
+      <param name="place2">"upper"</param>
+    </addition>
     <interval>10000</interval>
     <topic>devices/device1/event</topic>
   </publish>
   <publish>
-    <address>150.65.230.104</address>
+    <node>150.65.230.104</node>
     <eoj>001201</eoj>
     <property>
       <epc>E0</epc>
@@ -50,16 +50,16 @@
         <param name="size">1</param>
       </converter>
     </property>
-    <template>
-      <param name="place">tan-lab_upper</param>
-      <param name="place1">tan-lab</param>
-      <param name="place2">upper</param>
-    </template>
+    <addition>
+      <param name="place">"tan-lab_upper"</param>
+      <param name="place1">"tan-lab"</param>
+      <param name="place2">"upper"</param>
+    </addition>
     <interval>10000</interval>
     <topic>devices/device2/event</topic>
   </publish>
   <publish>
-    <address>150.65.230.105</address>
+    <node>150.65.230.105</node>
     <eoj>001101</eoj>
     <property>
       <epc>E0</epc>
@@ -79,16 +79,16 @@
         <param name="divide">10</param>
       </converter>
     </property>
-    <template>
+    <addition>
       <param name="place">tan-lab_lower</param>
       <param name="place1">tan-lab</param>
       <param name="place2">lower</param>
-    </template>
+    </addition>
     <interval>10000</interval>
     <topic>devices/device3/event</topic>
   </publish>
   <publish>
-    <address>150.65.230.105</address>
+    <node>150.65.230.105</node>
     <eoj>001201</eoj>
     <property>
       <epc>E0</epc>
@@ -108,16 +108,16 @@
         <param name="size">1</param>
       </converter>
     </property>
-    <template>
-      <param name="place">tan-lab_lower</param>
-      <param name="place1">tan-lab</param>
-      <param name="place2">lower</param>
-    </template>
+    <addition>
+      <param name="place">"tan-lab_lower"</param>
+      <param name="place1">"tan-lab"</param>
+      <param name="place2">"lower"</param>
+    </addition>
     <interval>10000</interval>
     <topic>devices/device4/event</topic>
   </publish>
   <publish>
-    <address>150.65.231.30</address>
+    <node>150.65.231.30</node>
     <eoj>002d01</eoj>
     <property>
       <epc>E0</epc>
@@ -141,7 +141,7 @@
     <topic>devices/device5/event</topic>
   </publish>
   <publish>
-    <address>150.65.231.21</address>
+    <node>150.65.231.21</node>
     <eoj>001101</eoj>
     <property>
       <epc>E0</epc>
@@ -165,7 +165,7 @@
     <topic>devices/device6/event</topic>
   </publish>
   <publish>
-    <address>150.65.231.21</address>
+    <node>150.65.231.21</node>
     <eoj>001201</eoj>
     <property>
       <epc>E0</epc>
@@ -189,7 +189,7 @@
     <topic>devices/device7/event</topic>
   </publish>
   <publish>
-    <address>150.65.231.35</address>
+    <node>150.65.231.35</node>
     <eoj>001b01</eoj>
     <property>
       <epc>E0</epc>
@@ -222,7 +222,7 @@
     <topic>devices/device8/event</topic>
   </publish>
   <publish>
-    <address>150.65.231.35</address>
+    <node>150.65.231.35</node>
     <eoj>001d01</eoj>
     <property>
       <epc>E0</epc>
@@ -255,7 +255,7 @@
     <topic>devices/device9/event</topic>
   </publish>
   <publish>
-    <address>150.65.231.27</address>
+    <node>150.65.231.27</node>
     <eoj>001101</eoj>
     <property>
       <epc>E0</epc>
@@ -279,7 +279,7 @@
     <topic>devices/device12/event</topic>
   </publish>
   <publish>
-    <address>150.65.231.27</address>
+    <node>150.65.231.27</node>
     <eoj>001201</eoj>
     <property>
       <epc>E0</epc>
@@ -303,7 +303,7 @@
     <topic>devices/device13/event</topic>
   </publish>
   <publish>
-    <address>150.65.231.27</address>
+    <node>150.65.231.27</node>
     <eoj>002d01</eoj>
     <property>
       <epc>E0</epc>
@@ -328,7 +328,7 @@
   </publish>
   
   <publish get="disabled" notify="enabled">
-    <address>150.65.231.21</address>
+    <node>150.65.231.21</node>
     <eoj>001101</eoj>
     <property>
       <epc>81</epc>
@@ -343,7 +343,7 @@
   </publish>
   
   <publish get="disabled" notify="enabled">
-    <address>150.65.231.21</address>
+    <node>150.65.231.21</node>
     <eoj>001101</eoj>
     <property>
       <epc>F0</epc>
@@ -357,7 +357,7 @@
   </publish>
 
   <subscribe>
-    <address>150.65.231.21</address>
+    <node>150.65.231.21</node>
     <eoj>05fd01</eoj>
     <property>
       <epc>80</epc>
@@ -370,7 +370,7 @@
     <topic>devices/device10/event</topic>
   </subscribe>
   <subscribe>
-    <address>150.65.231.21</address>
+    <node>150.65.231.21</node>
     <eoj>001101</eoj>
     <property>
       <epc>F0</epc>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rules>
+  <publish get="enabled" notify="enabled">
+    <eoj>05fd</eoj>
+    
+    <property>
+      <epc>80</epc>
+      <name>status</name>
+      <converter>
+        <class>Map</class>
+        <param name="mapping">{"30":"ON","31":"OFF"}</param>
+      </converter>
+    </property>
+    
+    <interval>30000</interval>
+    <delay>8000</delay>
+    <topic>devices/[NODE]/[EOJ]</topic>
+  </publish>
+</rules>

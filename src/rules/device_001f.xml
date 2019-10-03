@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rules>
+  <publish get="enabled" notify="enabled">
+    <eoj>001f</eoj>
+    
+    <property><epc>80</epc><name>EPC_80</name></property>
+    <property><epc>E0</epc><name>EPC_E0</name></property>
+    <property><epc>E1</epc><name>EPC_E1</name></property>
+    <property><epc>F1</epc><name>EPC_F1</name></property>
+    <property><epc>F0</epc><name>EPC_F0</name></property>
+    
+    <property>
+      <epc>80</epc>
+      <name>operation_status</name>
+      <converter>
+        <class>Map</class>
+        <param name="mapping">{"30":"ON","31":"OFF"}</param>
+      </converter>
+    </property>
+    
+    <property>
+      <epc>E0</epc>
+      <name>windspeed</name>
+      <converter>
+        <class>Float</class>
+        <param name="size">2</param>
+        <param name="divide">100</param>
+      </converter>
+    </property>
+    
+    <property>
+      <epc>E1</epc>
+      <name>wind_direction</name>
+      <converter>
+        <class>Integer</class>
+        <param name="size">2</param>
+        <param name="signed">false</param>
+      </converter>
+    </property>
+    
+    <property>
+      <epc>F0</epc>
+      <name>wind_direction_horizontal</name>
+      <converter>
+        <class>Float</class>
+        <param name="size">2</param>
+        <param name="divide">10</param>
+        <param name="signed">false</param>
+      </converter>
+    </property>
+    
+    <property>
+      <epc>F1</epc>
+      <name>wind_direction_vertical</name>
+      <converter>
+        <class>Float</class>
+        <param name="size">2</param>
+        <param name="divide">10</param>
+      </converter>
+    </property>
+    
+    <interval>30000</interval>
+    <delay>4500</delay>
+    <topic>devices/[NODE]/[EOJ]</topic>
+  </publish>
+</rules>

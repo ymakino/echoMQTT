@@ -253,7 +253,7 @@ public class JsonDecoder {
 
         JValue value;
         String substr = string.substring(firstIndex, lastIndex);
-        value = JValue.newNumber(new BigDecimal(substr));
+        value = JValue.newNumber(new BigDecimal(substr).multiply(BigDecimal.valueOf(sign)));
 
         logger.exiting(className, "parseNumberWithSign", value);
         return value;
@@ -293,7 +293,7 @@ public class JsonDecoder {
         }
 
         String substr = string.substring(firstIndex, lastIndex);
-        JValue value = JValue.newNumber(new BigInteger(substr, 16));
+        JValue value = JValue.newNumber(new BigInteger(substr, 16).multiply(BigInteger.valueOf(sign)));
         logger.exiting(className, "parseHexNumberWithSign", value);
         return value;
     }

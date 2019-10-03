@@ -17,7 +17,7 @@ public class Integer extends Converter {
     private static final String className = Integer.class.getName();
     
     private boolean isSigned = true;
-    private int size = 2;
+    private int size = -1;
     
     public Integer(HashMap<String, String> params) throws ConverterException {
         logger.entering(className, "Integer", params);
@@ -89,6 +89,15 @@ public class Integer extends Converter {
 
         return num;
     }
+    
+    public boolean isSigned() {
+        return isSigned;
+    }
+    
+    @Override
+    public int getSize() {
+        return size;
+    }
 
     @Override
     public JValue convert(Data data) {
@@ -97,9 +106,9 @@ public class Integer extends Converter {
         JValue result;
         
         if (isSigned) {
-            result = JValue.newNumber(s(data));
+            result = JValue.newNumber(s(pack(data)));
         } else {
-            result = JValue.newNumber(u(data));
+            result = JValue.newNumber(u(pack(data)));
         }
         
         logger.exiting(className, "convert", result);

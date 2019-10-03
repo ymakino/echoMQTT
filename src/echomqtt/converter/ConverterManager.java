@@ -34,7 +34,7 @@ public class ConverterManager {
     }
     
     public Converter instantiate(String name, HashMap<String, String> params) {
-        logger.entering(className, "instantiate", new Object[]{name, params});
+        logger.entering(className, "instantiate", new java.lang.Object[]{name, params});
         
         Class cls = null;
         
@@ -73,7 +73,7 @@ public class ConverterManager {
     }
     
     private String serializeName(String str, HashMap<String, String> params) {
-        logger.entering(className, "serializeName", new Object[]{str, params});
+        logger.entering(className, "serializeName", new java.lang.Object[]{str, params});
         
         String sep = "$";
         ArrayList<String> keys = new ArrayList<String>(params.keySet());
@@ -90,7 +90,7 @@ public class ConverterManager {
     }
     
     public Converter getConverter(String str, HashMap<String, String> params) {
-        logger.entering(className, "getConverter", new Object[]{str, params});
+        logger.entering(className, "getConverter", new java.lang.Object[]{str, params});
         
         String serializedName = serializeName(str, params);
         

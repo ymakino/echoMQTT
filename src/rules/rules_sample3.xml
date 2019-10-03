@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rules>
+    <!--
+  <publish>
+    <node>150.65.230.104</node>
+    <eoj>001101</eoj>
+    <property>
+      <epc>E0</epc>
+      <name>temperature</name>
+      <converter>
+        <class>Float</class>
+        <param name="size">2</param>
+        <param name="divide">10</param>
+      </converter>
+    </property>
+    <interval>10000</interval>
+    <topic>devices/device1/event</topic>
+  </publish>
+  <publish>
+    <node>150.65.230.104</node>
+    <eoj>001100</eoj>
+    <property>
+      <epc>E0</epc>
+      <name>temperature</name>
+      <converter>
+        <class>Float</class>
+        <param name="size">2</param>
+        <param name="divide">10</param>
+      </converter>
+    </property>
+    <interval>10000</interval>
+    <topic instance="1">devices/device2/event</topic>
+    <topic instance="2">devices/device3/event</topic>
+  </publish>
+  <publish>
+    <eoj>001101</eoj>
+    <property>
+      <epc>E0</epc>
+      <name>temperature</name>
+      <converter>
+        <class>Float</class>
+        <param name="size">2</param>
+        <param name="divide">10</param>
+      </converter>
+    </property>
+    <interval>10000</interval>
+    <topic node="150.65.231.38">devices/device4/event</topic>
+    <topic node="150.65.231.111">devices/device5/event</topic>
+    <topic node="150.65.231.114">devices/device6/event</topic>
+  </publish>
+  -->
+  <publish>
+    <eoj>0011</eoj>
+    <property>
+      <epc>E0</epc>
+      <name>temperature</name>
+      <converter>
+        <class>Float</class>
+        <param name="size">2</param>
+        <param name="divide">10</param>
+      </converter>
+    </property>
+    <interval>10000</interval>
+    <topic node="150.65.231.38" instance="1">devices/device7/event</topic>
+    <topic node="150.65.231.111" instance="1">devices/device8/event</topic>
+    <topic node="150.65.231.114" instance="1">devices/device9/event</topic>
+  </publish>
+</rules>

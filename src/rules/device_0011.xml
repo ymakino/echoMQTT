@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rules>
+  <publish get="enabled" notify="enabled">
+    <eoj>0011</eoj>
+    
+    <property><epc>80</epc><name>EPC_80</name></property>
+    <property><epc>E0</epc><name>EPC_E0</name></property>
+    
+    <property>
+      <epc>80</epc>
+      <name>operation_status</name>
+      <converter>
+        <class>Map</class>
+        <param name="mapping">{"30":"ON","31":"OFF"}</param>
+      </converter>
+    </property>
+    
+    <property>
+      <epc>E0</epc>
+      <name>temperature</name>
+      <converter>
+        <class>Float</class>
+        <param name="size">2</param>
+        <param name="divide">10</param>
+      </converter>
+    </property>
+    
+    <interval>30000</interval>
+    <delay>2500</delay>
+    <topic>devices/[NODE]/[EOJ]</topic>
+  </publish>
+</rules>

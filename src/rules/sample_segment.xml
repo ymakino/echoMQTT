@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rules>
+  <publish get="enabled" notify="enabled">
+    <!-- <node>192.168.2.100</node> -->
+    <node>150.65.230.104</node>
+    <!-- <eoj>001101</eoj> -->
+    
+    <eoj>0011</eoj>
+    
+    <property><epc>80</epc><name>EPC_80</name></property>
+    <property><epc>E0</epc><name>EPC_E0</name></property>
+    
+    <property>
+      <epc>80</epc>
+      <name>status</name>
+      <segment offset="0">
+        <converter>
+          <class>Map</class>
+          <param name="mapping">{"30":"ON","31":"OFF"}</param>
+        </converter>
+      </segment>
+    </property>
+    
+    <property>
+      <epc>E0</epc>
+      <name>E0[0]</name>
+      <segment offset="0">
+        <converter>
+          <class>Raw</class>
+          <param name="size">1</param>
+        </converter>
+      </segment>
+    </property>
+    
+    <property>
+      <epc>E0</epc>
+      <name>E0[1]</name>
+      <segment offset="1">
+        <converter>
+          <class>Raw</class>
+          <param name="size">1</param>
+        </converter>
+      </segment>
+    </property>
+    
+    <property>
+      <epc>E0</epc>
+      <name>temperature</name>
+      <segment offset="0" size="2">
+        <converter>
+          <class>Float</class>
+          <param name="size">2</param>
+          <param name="divide">10</param>
+        </converter>
+      </segment>
+    </property>
+    
+    <addition>
+      <param name="sensor">"temperature"</param>
+      <param name="min">-273.2</param>
+      <param name="max">3276.6</param>
+    </addition>
+    
+    <interval>10000</interval>
+    <delay>0</delay>
+    <topic>sample/[NODE]/[EOJ]/[METHOD]</topic>
+    <topic>sample/[NODE]/[CLASS_EOJ]/[INSTANCE_CODE]/[METHOD]</topic>
+    <topic>sample/[NODE]/[CLASS_GROUP_CODE]/[CLASS_CODE]/[INSTANCE_CODE]/[METHOD]</topic>
+  </publish>
+  
+  <publish get="enabled" notify="enabled">
+    <!-- <node>192.168.2.100</node> -->
+    <node>150.65.230.104</node>
+    <!-- <eoj>001201</eoj> -->
+    
+    <eoj>0012</eoj>
+    
+    <property><epc>80</epc><name>EPC_80</name></property>
+    <property><epc>E0</epc><name>EPC_E0</name></property>
+    
+    <property>
+      <epc>80</epc>
+      <name>status</name>
+      <segment offset="0">
+        <converter>
+          <class>Map</class>
+          <param name="mapping">{"30":"ON","31":"OFF"}</param>
+        </converter>
+      </segment>
+    </property>
+    
+    <property>
+      <epc>E0</epc>
+      <name>E0[0]</name>
+      <segment offset="0">
+        <converter>
+          <class>Raw</class>
+          <param name="size">1</param>
+        </converter>
+      </segment>
+    </property>
+    
+    <property>
+      <epc>E0</epc>
+      <name>relative_humidity</name>
+      <segment offset="0" size="2">
+        <converter>
+         <class>Integer</class>
+          <param name="signed">false</param>
+          <param name="size">1</param>
+        </converter>
+      </segment>
+    </property>
+    
+    <addition>
+      <param name="sensor">"humidity"</param>
+      <param name="min">0</param>
+      <param name="max">100</param>
+    </addition>
+    
+    <interval>10000</interval>
+    <delay>0</delay>
+    <topic>sample/[NODE]/[EOJ]/[METHOD]</topic>
+    <topic>sample/[NODE]/[CLASS_EOJ]/[INSTANCE_CODE]/[METHOD]</topic>
+    <topic>sample/[NODE]/[CLASS_GROUP_CODE]/[CLASS_CODE]/[INSTANCE_CODE]/[METHOD]</topic>
+  </publish>
+</rules>

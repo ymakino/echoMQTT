@@ -11,20 +11,20 @@ import java.util.List;
  * @author ymakino
  */
 public class SubscribeRule {
-    private String address;
+    private String node;
     private EOJ eoj;
     private String topic;
     private List<PropertyRule> propertyRules;
     
-    public SubscribeRule(String address, EOJ eoj, String topic, Collection<PropertyRule> propertieRules) {
-        this.address = address;
+    public SubscribeRule(String node, EOJ eoj, String topic, Collection<PropertyRule> propertieRules) {
+        this.node = node;
         this.eoj = eoj;
         this.topic = topic;
         this.propertyRules = new LinkedList<PropertyRule>(propertieRules);
     }
     
-    public String getAddress() {
-        return address;
+    public String getNode() {
+        return node;
     }
     
     public EOJ getEOJ() {
@@ -52,7 +52,7 @@ public class SubscribeRule {
         StringBuilder builder = new StringBuilder();
         
         builder.append("SubscribeRule {");
-        builder.append("address: ").append(address).append(", ");
+        builder.append("node: ").append(node).append(", ");
         builder.append("eoj: ").append(eoj).append(", ");
         builder.append("topic: ").append(topic).append(", ");
         

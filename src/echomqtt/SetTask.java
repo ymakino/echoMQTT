@@ -16,6 +16,7 @@ import java.util.logging.Logger;
 import echomqtt.json.JsonDecoderException;
 import echomqtt.json.JValue;
 import echomqtt.json.JObject;
+import echowand.net.Node;
 import org.eclipse.paho.client.mqttv3.MqttTopic;
 
 /**
@@ -86,13 +87,16 @@ public class SetTask {
 
             if (!properties.isEmpty()) {
                 try {
-                    InetNodeInfo nodeInfo = new InetNodeInfo(InetAddress.getByName(subscribeRule.getAddress()));
+                    Node node = service.getGroupNode();
+                    
+                    if (subscribeRule.getNode() != null) {
+                        node = service.getRemoteNode(subscribeRule.getNode());
+                    }
+                    
                     EOJ eoj = subscribeRule.getEOJ();
-                    logger.logp(Level.INFO, className, "SetTask.arrived", "doSet: " + nodeInfo + " " + eoj + " " + properties);
-                    service.doSet(nodeInfo, eoj, properties, 1000, false);
+                    logger.logp(Level.INFO, className, "SetTask.arrived", "doSet: " + node + " " + eoj + " " + properties);
+                    service.doSet(node, eoj, properties, 1000, false);
                     result = true;
-                } catch (UnknownHostException ex) {
-                    logger.logp(Level.WARNING, className, "SetTask.arrived", "catched exception", ex);
                 } catch (SubnetException ex) {
                     logger.logp(Level.WARNING, className, "SetTask.arrived", "catched exception", ex);
                 }

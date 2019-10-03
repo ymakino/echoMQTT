@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rules>
+  <publish get="enabled" notify="enabled">
+    <!-- <node>192.168.2.100</node> -->
+    <node>150.65.230.104</node>
+    <!-- <eoj>001101</eoj> -->
+    
+    <eoj>0011</eoj>
+    
+    <property><epc>80</epc><name>EPC_80</name></property>
+    <property><epc>E0</epc><name>EPC_E0</name></property>
+    
+    <property>
+      <epc>80</epc>
+      <name>status</name>
+      <converter>
+        <class>Map</class>
+        <param name="mapping">{"30":"ON","31":"OFF"}</param>
+      </converter>
+    </property>
+    
+    <property>
+      <epc>E0</epc>
+      <name>E0_array1</name>
+      <array min="2" max="2">
+        <converter>
+          <class>Integer</class>
+          <param name="size">1</param>
+        </converter>
+      </array>
+    </property>
+    
+    <property>
+      <epc>E0</epc>
+      <name>E0_array2</name>
+      <array min="2" max="2" mode="object">
+        <converter>
+          <class>Integer</class>
+          <param name="size">1</param>
+        </converter>
+      </array>
+    </property>
+    
+    <property>
+      <epc>E0</epc>
+      <name>E0_array_array</name>
+      <array min="2" max="2">
+        <array min="1" max="1">
+          <converter>
+            <class>Integer</class>
+            <param name="size">1</param>
+          </converter>
+        </array>
+      </array>
+    </property>
+    
+    <property>
+      <epc>E0</epc>
+      <name>E0_object_array</name>
+      <object>
+        <value name="E0[0]">
+          <array min="1" max="1">
+            <converter>
+              <class>Integer</class>
+              <param name="size">1</param>
+            </converter>
+          </array>
+        </value>
+        <value name="E0[1]">
+          <array min="1" max="1">
+            <converter>
+              <class>Integer</class>
+              <param name="size">1</param>
+            </converter>
+          </array>
+        </value>
+      </object>
+    </property>
+    
+    <property>
+      <epc>E0</epc>
+      <name>E0_array_object</name>
+      <array min="2" max="2">
+        <object>
+          <value name="E0">
+            <converter>
+              <class>Integer</class>
+              <param name="size">1</param>
+            </converter>
+          </value>
+        </object>
+      </array>
+    </property>
+    
+    <property>
+      <epc>E0</epc>
+      <name>temperature</name>
+      <converter>
+        <class>Float</class>
+        <param name="size">2</param>
+        <param name="divide">10</param>
+      </converter>
+    </property>
+    
+    <addition>
+      <param name="sensor">"temperature"</param>
+      <param name="min">-273.2</param>
+      <param name="max">3276.6</param>
+    </addition>
+    
+    <interval>10000</interval>
+    <delay>0</delay>
+    <topic>sample/[NODE]/[EOJ]/[METHOD]</topic>
+    <topic>sample/[NODE]/[CLASS_EOJ]/[INSTANCE_CODE]/[METHOD]</topic>
+    <topic>sample/[NODE]/[CLASS_GROUP_CODE]/[CLASS_CODE]/[INSTANCE_CODE]/[METHOD]</topic>
+  </publish>
+  
+  <publish get="enabled" notify="enabled">
+    <!-- <node>192.168.2.100</node> -->
+    <node>150.65.230.104</node>
+    <!-- <eoj>001201</eoj> -->
+    
+    <eoj>0012</eoj>
+    
+    <property><epc>80</epc><name>EPC_80</name></property>
+    <property><epc>E0</epc><name>EPC_E0</name></property>
+    
+    <property>
+      <epc>80</epc>
+      <name>status</name>
+      <converter>
+        <class>Map</class>
+        <param name="mapping">{"30":"ON","31":"OFF"}</param>
+      </converter>
+    </property>
+    
+    <property>
+      <epc>80</epc>
+      <name>script_status</name>
+      <converter>
+        <class>Script</class>
+        <param name="script">
+          if (value[0] == 0x30) {
+            result = "on";
+          } else {
+            result = "off";
+          }
+        </param>
+      </converter>
+    </property>
+    
+    <property>
+      <epc>E0</epc>
+      <name>E0[0]</name>
+      <segment offset="0">
+        <converter>
+          <class>Raw</class>
+          <param name="size">1</param>
+        </converter>
+      </segment>
+    </property>
+    
+    <property>
+      <epc>E0</epc>
+      <name>relative_humidity</name>
+      <converter>
+        <class>Integer</class>
+        <param name="signed">false</param>
+        <param name="size">1</param>
+      </converter>
+    </property>
+    
+    <property>
+      <epc>E0</epc>
+      <name>script_relative_humidity</name>
+      <converter>
+        <class>Script</class>
+        <param name="script">
+          result = 0x00ff &amp; value[0];
+        </param>
+      </converter>
+    </property>
+    
+    <property>
+      <epc>E0</epc>
+      <name>command_relative_humidity</name>
+      <converter>
+        <class>Command</class>
+        <param name="file">python</param>
+        <param name="args">["-c", "import sys; print(\"%d\" % int(sys.argv[1], 16))", null]</param>
+      </converter>
+    </property>
+    
+    <addition>
+      <param name="sensor">"humidity"</param>
+      <param name="min">0</param>
+      <param name="max">100</param>
+    </addition>
+    
+    <interval>10000</interval>
+    <delay>0</delay>
+    <topic>sample/[NODE]/[EOJ]/[METHOD]</topic>
+    <topic>sample/[NODE]/[CLASS_EOJ]/[INSTANCE_CODE]/[METHOD]</topic>
+    <topic>sample/[NODE]/[CLASS_GROUP_CODE]/[CLASS_CODE]/[INSTANCE_CODE]/[METHOD]</topic>
+  </publish>
+</rules>

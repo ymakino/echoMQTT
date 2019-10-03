@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rules>
+  <publish get="enabled" notify="enabled">
+    <!-- <node>192.168.2.100</node> -->
+    <node>150.65.230.104</node>
+    <!-- <eoj>001101</eoj> -->
+    
+    <eoj>0011</eoj>
+    
+    <property><epc>80</epc><name>EPC_80</name></property>
+    <property><epc>E0</epc><name>EPC_E0</name></property>
+    
+    <property>
+      <epc>80</epc>
+      <name>status</name>
+      <converter>
+        <class>Map</class>
+        <param name="mapping">{"30":"ON","31":"OFF"}</param>
+      </converter>
+    </property>
+    
+    <property>
+      <epc>E0</epc>
+      <name>temperature</name>
+      <converter>
+        <class>Command</class>
+        <param name="file">python</param>
+        <param name="args">["-c", "import sys; print(\"%.01f\" % (int(sys.argv[1], 16)/10.0))", null]</param>
+      </converter>
+    </property>
+    
+    <addition>
+      <param name="sensor">"temperature"</param>
+      <param name="min">-273.2</param>
+      <param name="max">3276.6</param>
+    </addition>
+    
+    <interval>10000</interval>
+    <delay>0</delay>
+    <topic>sample/[NODE]/[EOJ]/[METHOD]</topic>
+    <topic>sample/[NODE]/[CLASS_EOJ]/[INSTANCE_CODE]/[METHOD]</topic>
+    <topic>sample/[NODE]/[CLASS_GROUP_CODE]/[CLASS_CODE]/[INSTANCE_CODE]/[METHOD]</topic>
+  </publish>
+  
+  <publish get="enabled" notify="enabled">
+    <!-- <node>192.168.2.100</node> -->
+    <node>150.65.230.104</node>
+    <!-- <eoj>001201</eoj> -->
+    
+    <eoj>0012</eoj>
+    
+    <property><epc>80</epc><name>EPC_80</name></property>
+    <property><epc>E0</epc><name>EPC_E0</name></property>
+    
+    <property>
+      <epc>80</epc>
+      <name>status</name>
+      <converter>
+        <class>Map</class>
+        <param name="mapping">{"30":"ON","31":"OFF"}</param>
+      </converter>
+    </property>
+    
+    <property>
+      <epc>E0</epc>
+      <name>command_relative_humidity</name>
+      <converter>
+        <class>Command</class>
+        <param name="file">python</param>
+        <param name="args">["-c", "import sys; print(\"%d\" % int(sys.argv[1], 16))", null]</param>
+      </converter>
+    </property>
+    
+    <addition>
+      <param name="sensor">"humidity"</param>
+      <param name="min">0</param>
+      <param name="max">100</param>
+    </addition>
+    
+    <interval>10000</interval>
+    <delay>0</delay>
+    <topic>sample/[NODE]/[EOJ]/[METHOD]</topic>
+    <topic>sample/[NODE]/[CLASS_EOJ]/[INSTANCE_CODE]/[METHOD]</topic>
+    <topic>sample/[NODE]/[CLASS_GROUP_CODE]/[CLASS_CODE]/[INSTANCE_CODE]/[METHOD]</topic>
+  </publish>
+</rules>

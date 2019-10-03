@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rules>
+  <publish get="enabled" notify="enabled">
+    <eoj>002202</eoj>
+    
+    <property><epc>80</epc><name>EPC_80</name></property>
+    <property><epc>E0</epc><name>EPC_E0</name></property>
+    <property><epc>E2</epc><name>EPC_E2</name></property>
+    <property><epc>E3</epc><name>EPC_E3</name></property>
+    <property><epc>E4</epc><name>EPC_E4</name></property>
+    <property><epc>E5</epc><name>EPC_E5</name></property>
+    
+    <property>
+      <epc>80</epc>
+      <name>operation_status</name>
+      <converter>
+        <class>Map</class>
+        <param name="mapping">{"30":"ON","31":"OFF"}</param>
+      </converter>
+    </property>
+    
+    <property>
+      <epc>E0</epc>
+      <name>cumulative_electric_energy_consumption</name>
+      <converter>
+        <class>Integer</class>
+        <param name="size">4</param>
+        <param name="signed">false</param>
+      </converter>
+    </property>
+    
+    <property>
+      <epc>E2</epc>
+      <name>instantaneous_electric_power_small</name>
+      <converter>
+        <class>Float</class>
+        <param name="size">2</param>
+        <param name="divide">10</param>
+      </converter>
+    </property>
+    
+    <property>
+      <epc>E3</epc>
+      <name>instantaneous_electric_power_large</name>
+      <converter>
+        <class>Float</class>
+        <param name="size">2</param>
+        <param name="divide">10</param>
+      </converter>
+    </property>
+    
+    <property>
+      <epc>E4</epc>
+      <name>cumulative_electric_energy_consumption_log</name>
+      <array min="48" max="48">
+        <converter>
+          <class>Integer</class>
+          <param name="size">4</param>
+          <param name="signed">false</param>
+        </converter>
+      </array>
+    </property>
+    
+    <property>
+      <epc>E5</epc>
+      <name>effective_voltage</name>
+      <converter>
+        <class>Integer</class>
+        <param name="size">2</param>
+        <param name="signed">false</param>
+      </converter>
+    </property>
+    
+    <interval>30000</interval>
+    <delay>2000</delay>
+    <topic>devices/[NODE]/[EOJ]</topic>
+  </publish>
+</rules>
