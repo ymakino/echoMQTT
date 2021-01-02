@@ -2,9 +2,9 @@
 
 PAHO_PATH=paho.mqtt.java
 PAHO_URL=https://github.com/eclipse/paho.mqtt.java.git
-VERSION=1.2.1
+VERSION=1.2.5
 
-rm -fr paho.mqtt.java
+rm -fr ${PAHO_PATH}
 
 git clone ${PAHO_URL} -b v${VERSION}
 
@@ -15,6 +15,7 @@ fi
 
 sed -i -s 's|\(<module>org.eclipse.paho.client.mqttv3.test</module>\)|<!-- \1 -->|' ${PAHO_PATH}/pom.xml
 sed -i -s 's|\(<module>org.eclipse.paho.sample.utility</module>\)|<!-- \1 -->|' ${PAHO_PATH}/pom.xml
+sed -i -s 's|\(<module>org.eclipse.paho.mqttv5.client.test</module>\)|<!-- \1 -->|' ${PAHO_PATH}/pom.xml
 
 ( cd ${PAHO_PATH} && mvn install )
 

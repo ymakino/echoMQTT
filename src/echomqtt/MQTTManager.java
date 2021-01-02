@@ -23,6 +23,8 @@ public class MQTTManager {
     
     private String broker;
     private String clientId;
+    private String userName;
+    private String password;
     private int publishQoS;
     private MqttClient client;
     
@@ -72,6 +74,22 @@ public class MQTTManager {
             
         this.broker = broker;
         this.clientId = clientId;
+        userName = null;
+        password = null;
+        publishQoS = 0;
+        client = null;
+        listeners = new LinkedList<MQTTListener>();
+        
+        logger.exiting(className, "MQTTManager");
+    }
+    
+    public MQTTManager(String broker, String clientId, String userName, String password) throws PublisherException {
+        logger.entering(className, "MQTTManager", new Object[]{broker, clientId});
+            
+        this.broker = broker;
+        this.clientId = clientId;
+        this.userName = userName;
+        this.password = password;
         publishQoS = 0;
         client = null;
         listeners = new LinkedList<MQTTListener>();
@@ -116,8 +134,19 @@ public class MQTTManager {
             client.setCallback(new MQTTManagerCallback());
 
             MqttConnectOptions options = new MqttConnectOptions();
+            options.setAutomaticReconnect(true);
             options.setCleanSession(cleanSession);
             options.setMaxInflight(1000);
+            
+            if (userName != null) {
+                System.out.println(userName);
+                options.setUserName(userName);
+            }
+            
+            if (password != null) {
+                System.out.println(password);
+                options.setPassword(password.toCharArray());
+            }
 
             logger.logp(Level.INFO, className, "connect", "Connecting to broker: " + client.getServerURI());
             client.connect(options);
@@ -159,10 +188,6 @@ public class MQTTManager {
         String payload = jobject.toJSON();
         
         logger.logp(Level.INFO, className, "publish", "Topic: " + topic + ", Payload: " + payload);
-        
-        if (!isConnected()) {
-            connect(false);
-        }
         
         try {
             MqttMessage message = new MqttMessage(payload.getBytes());

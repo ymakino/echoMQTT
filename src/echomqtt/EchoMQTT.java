@@ -73,6 +73,19 @@ public class EchoMQTT {
         logger.exiting(className, "EchoMQTT");
     }
     
+    public EchoMQTT(Core core, String broker, String clientId, String userName, String password) throws PublisherException {
+        logger.entering(className, "EchoMQTT", new Object[]{core, broker, clientId});
+        
+        service = new Service(core);
+        this.broker = broker;
+        this.clientId = clientId;
+        mqttManager = new MQTTManager(broker, clientId, userName, password);
+        rulesList = new LinkedList<Rules>();
+        working = false;
+        
+        logger.exiting(className, "EchoMQTT");
+    }
+    
     public void setPublishQoS(int publishQoS) {
         logger.entering(className, "setPublishQoS", publishQoS);
         
@@ -200,7 +213,7 @@ public class EchoMQTT {
     }
     
     public static void showUsage(String name) {
-        System.out.println("Usage: " + name + " [ -i interface ] [ -b broker ] [ -c clientId ] [ -q publishQoS ] xmlfile...");
+        System.out.println("Usage: " + name + " [ -i interface ] [ -b broker ] [ -c clientId ] [ -u userName ] [ -p password ] [ -q publishQoS ] xmlfile...");
     }
 
     /**
@@ -209,6 +222,8 @@ public class EchoMQTT {
     public static void main(String[] args) throws SubnetException, TooManyObjectsException, SocketException, IOException, PublisherException, ParserConfigurationException, SAXException, InterruptedException {
         String broker = "tcp://127.0.0.1:1883";
         String clientId = MqttClient.generateClientId();
+        String userName = null;
+        String password = null;
         int publishQoS = -1;
         NetworkInterface nif = null;
         
@@ -241,6 +256,12 @@ public class EchoMQTT {
                 case "-b":
                     broker = args[++i];
                     break;
+                case "-u":
+                    userName = args[++i];
+                    break;
+                case "-p":
+                    password = args[++i];
+                    break;
                 case "-q":
                     publishQoS = Integer.parseInt(args[++i]);
                     break;
@@ -269,7 +290,7 @@ public class EchoMQTT {
         
         core.startService();
         
-        EchoMQTT echomqtt = new EchoMQTT(core, broker, clientId);
+        EchoMQTT echomqtt = new EchoMQTT(core, broker, clientId, userName, password);
         
         if (publishQoS >= 0) {
             echomqtt.setPublishQoS(publishQoS);
