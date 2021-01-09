@@ -57,7 +57,7 @@
     </property>
     
     <property>
-      <epc>C3</epc>
+      <epc>E2</epc>
       <name>cumulative_electric_energy_consumption_log</name>
       <segment offset="2">
         <array min="48" max="48">
