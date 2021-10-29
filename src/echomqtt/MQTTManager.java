@@ -139,12 +139,10 @@ public class MQTTManager {
             options.setMaxInflight(1000);
             
             if (userName != null) {
-                System.out.println(userName);
                 options.setUserName(userName);
             }
             
             if (password != null) {
-                System.out.println(password);
                 options.setPassword(password.toCharArray());
             }
 

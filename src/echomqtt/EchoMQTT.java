@@ -35,7 +35,7 @@ public class EchoMQTT {
     private LinkedList<ObserveTask> observeTasks;
     
     public EchoMQTT(Core core) throws PublisherException {
-        logger.entering(className, "EchoMQTT", new Object[]{core, broker, clientId});
+        logger.entering(className, "EchoMQTT", core);
         
         service = new Service(core);
         this.broker = "tcp://localhost:1883";
@@ -48,7 +48,7 @@ public class EchoMQTT {
     }
     
     public EchoMQTT(Core core, String broker) throws PublisherException {
-        logger.entering(className, "EchoMQTT", new Object[]{core, broker, clientId});
+        logger.entering(className, "EchoMQTT", new Object[]{core, broker});
         
         service = new Service(core);
         this.broker = broker;
@@ -74,7 +74,7 @@ public class EchoMQTT {
     }
     
     public EchoMQTT(Core core, String broker, String clientId, String userName, String password) throws PublisherException {
-        logger.entering(className, "EchoMQTT", new Object[]{core, broker, clientId});
+        logger.entering(className, "EchoMQTT", new Object[]{core, broker, clientId, userName, password});
         
         service = new Service(core);
         this.broker = broker;
