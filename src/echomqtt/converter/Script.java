@@ -35,7 +35,13 @@ public class Script extends Converter {
         logger.entering(className, "Command", params);
         
         manager = new ScriptEngineManager();
+        
         engine = manager.getEngineByName("javascript");
+        
+        if (engine == null) {
+            engine = manager.getEngineByName("rhino");
+        }
+        
         bindings = engine.createBindings();
         
         for (String key : params.keySet()) {
