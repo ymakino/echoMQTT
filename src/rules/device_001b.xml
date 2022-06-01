@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rules>
+  <publish get="enabled" notify="enabled">
+    <eoj>001b</eoj>
+    
+    <property><epc>80</epc><name>EPC_80</name></property>
+    <property><epc>E0</epc><name>EPC_E0</name></property>
+    
+    <property>
+      <epc>80</epc>
+      <name>operation_status</name>
+      <converter>
+        <class>Map</class>
+        <param name="mapping">{"30":"ON","31":"OFF"}</param>
+      </converter>
+    </property>
+    
+    <property>
+      <epc>E0</epc>
+      <name>co2</name>
+      <converter>
+        <class>Integer</class>
+        <param name="signed">false</param>
+        <param name="size">2</param>
+      </converter>
+    </property>
+    
+    <interval>30000</interval>
+    <delay>8500</delay>
+    <topic>devices/[NODE]/[EOJ]</topic>
+  </publish>
+</rules>
