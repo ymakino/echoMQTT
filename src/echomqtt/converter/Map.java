@@ -4,6 +4,7 @@ import echowand.common.Data;
 import echomqtt.json.JsonDecoderException;
 import echomqtt.json.JObject;
 import echomqtt.json.JValue;
+import echomqtt.json.JsonEncoderException;
 import java.util.HashMap;
 import java.util.logging.Logger;
 
@@ -143,18 +144,35 @@ public class Map extends Converter {
         logger.exiting(className, "convert", result);
         return result;
     }
-
-    @Override
-    public Data convert(JValue jvalue) throws ConverterException {
-        logger.entering(className, "convert", jvalue);
+    
+    private String keyToString(JValue jvalue) throws ConverterException {
         
-        if (!jvalue.isString()) {
+        if (!jvalue.isString() && !jvalue.isBoolean() && !jvalue.isNumber()) {
             ConverterException exception = new ConverterException("invalid parameter: " + jvalue);
             logger.throwing(className, "Map", exception);
             throw exception;
         }
         
-        String str = jvalue.asString().getValue();
+        if (jvalue.isString()) {
+            return jvalue.asString().getValue();
+        }
+        
+        try {
+            return jvalue.toJSON();
+        } catch (JsonEncoderException ex) {
+            ConverterException exception = new ConverterException("invalid parameter: " + jvalue, ex);
+            logger.throwing(className, "Map", exception);
+            throw exception;
+        }
+        
+    }
+
+    @Override
+    public Data convert(JValue jvalue) throws ConverterException {
+        logger.entering(className, "convert", jvalue);
+        
+        String str = keyToString(jvalue);
+        
         JValue dataValue;
 
         if (caseInsensitive) {
@@ -208,11 +226,23 @@ public class Map extends Converter {
         params2.put("case-insensitive", "true");
         Map map2 = new Map(params2);
         
+        HashMap<String, String> params3 = new HashMap<String, String>();
+        params3.put("mapping", "{\"30\":\"40\", \"31\":\"41\"}");
+        Map map3 = new Map(params3);
+        
+        HashMap<String, String> params4 = new HashMap<String, String>();
+        params4.put("mapping", "{\"true\":\"30\", \"false\":\"31\"}");
+        Map map4 = new Map(params4);
+        
         //System.out.println(map.convert(new Data(new byte[]{0x30})));
         //System.out.println(map.convert(new Data(new byte[]{0x31})));
         System.out.println(map1.convert(JValue.newString("ON")));
         System.out.println(map1.convert(JValue.newString("Off")));
         System.out.println(map2.convert(new Data((byte)0x30)));
         System.out.println(map2.convert(new Data((byte)0x31)));
+        System.out.println(map3.convert(JValue.newNumber(30)));
+        System.out.println(map3.convert(JValue.newNumber(31)));
+        System.out.println(map4.convert(JValue.newBoolean(true)));
+        System.out.println(map4.convert(JValue.newBoolean(false)));
     }
 }
