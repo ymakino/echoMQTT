@@ -143,7 +143,7 @@ public class Object extends Converter {
     public String toString() {
         StringBuilder builder = new StringBuilder();
         
-        builder.append("Array");
+        builder.append("Object");
         builder.append("(");
         builder.append(converters.toString());
         builder.append(")");
