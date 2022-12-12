@@ -32,7 +32,7 @@ public class Map extends Converter {
         try {
             for (int i=0; i<bytes.length; i++) {
                 String d = s.substring(i*2, i*2 + 2);
-                bytes[i] = Byte.parseByte(d, 16);
+                bytes[i] = (byte)java.lang.Integer.parseInt(d, 16);
             }
         } catch (NumberFormatException ex) {
             ConverterException exception = new ConverterException("invalid data: " + s, ex);
@@ -234,6 +234,10 @@ public class Map extends Converter {
         params4.put("mapping", "{\"true\":\"30\", \"false\":\"31\"}");
         Map map4 = new Map(params4);
         
+        HashMap<String, String> params5 = new HashMap<String, String>();
+        params5.put("mapping", "{\"true\":\"7f\", \"false\":\"80\"}");
+        Map map5 = new Map(params5);
+        
         //System.out.println(map.convert(new Data(new byte[]{0x30})));
         //System.out.println(map.convert(new Data(new byte[]{0x31})));
         System.out.println(map1.convert(JValue.newString("ON")));
@@ -244,5 +248,7 @@ public class Map extends Converter {
         System.out.println(map3.convert(JValue.newNumber(31)));
         System.out.println(map4.convert(JValue.newBoolean(true)));
         System.out.println(map4.convert(JValue.newBoolean(false)));
+        System.out.println(map5.convert(JValue.newBoolean(true)));
+        System.out.println(map5.convert(JValue.newBoolean(false)));
     }
 }
