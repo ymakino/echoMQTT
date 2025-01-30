@@ -2,7 +2,7 @@
 
 PAHO_PATH=paho.mqtt.java
 PAHO_URL=https://github.com/eclipse/paho.mqtt.java.git
-VERSION=1.2.5
+VERSION=${VERSION:-1.2.5}
 
 rm -fr ${PAHO_PATH}
 
